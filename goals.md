@@ -1,7 +1,7 @@
 # Readme
 
 Project : Digital Bank Wallet  
-Application Name : <Its your project : Choose a name>
+Application Name : Batua
 ## Requirements / MVP
 
 1. User Registration (KYC) Journey
@@ -25,4 +25,9 @@ money form other account holders
 
 ## Stretch goals
 
-- TODO
+- as a user I should be able to link my aadhar ID to my bank account
+- as a user I should be able to add my UPI id to my account and find users using UPI id
+- as a user I should be able to have multiple accounts and transfer between them
+- as a user I should be able to categorise my transactions
+- as a user I should be able to see the breakdown of my transactions by their categories
+- as a user I should be able to scan a QR code to send and receive money

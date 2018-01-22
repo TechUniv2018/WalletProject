@@ -25,7 +25,7 @@ Our uses cases are listed below with &#39;1&#39; being highest priority use case
 9. Create group for multiple members
 10. Split bill among the group
 
-!["Registration process"]('sc1.png')
+![alt text](https://ibb.co/e2EWmw "Description goes here")
 
         Use Case – Register a new Customer
 

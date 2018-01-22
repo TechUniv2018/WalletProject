@@ -25,7 +25,7 @@ Our uses cases are listed below with &#39;1&#39; being highest priority use case
 9. Create group for multiple members
 10. Split bill among the group
 
-![alt text](https://ibb.co/e2EWmw "Description goes here")
+![alt text](https://image.ibb.co/d0WoYb/sc1.png "Description goes here")
 
         Use Case – Register a new Customer
 
@@ -62,6 +62,8 @@ Alternate Workflow -
 
 1. The App will display an error message.
 2. The use case ends with a failure.
+
+     ![alt text](https://image.ibb.co/ksnj6w/sc2.png "Description goes here")
 
        Use Case – Login to an existing account
 

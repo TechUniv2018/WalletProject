@@ -125,7 +125,7 @@ _Actors_ _–_ Customer, Bank
 
 Description – This case describes how to add a friend or a contact to user&#39;s list.
 
-![Main image GIF](https://drive.google.com/open?id=1yPOZ3BdKKGyjs1qeKwEo7HFeT2l-G3OL)
+![Main image GIF](https://i.imgur.com/SUdaWWH.gif)
 
 Normal Workflow –
 
@@ -133,10 +133,9 @@ Normal Workflow –
 2. User will be prompt to the page where he can enter Account number/ phone number of a friend.
 3. Notification sent to the added user.
 
-![AddFriend1](https://drive.google.com/open?id=1z4YEDlEkZsynjUWVCFgTMAZuUPWkhcXz)
-![AddFriend2](https://drive.google.com/open?id=1MfVzYUiM0VGfcz-3BMgZJ5EUyQp4p9t0)
-![AddFriend3](https://drive.google.com/open?id=1aTH5FUNf5PPC-QXYslRZH2Qgb-H6IIKy)
-![AddFriend4](https://drive.google.com/open?id=1b1iqAoFfyVXtBaArTmHwVBQtwldiVfFC)
+![AddFriend2](https://i.imgur.com/0eswmvt.png)
+![AddFriend3](https://i.imgur.com/BdyySf9.png)
+![AddFriend4](https://i.imgur.com/usMShvE.png)
 
 ### Use case 5
 #### Pay funds to another user.
@@ -219,18 +218,17 @@ Description – This case describes how user can see the transaction history.
 
    Normal Workflow –
 
-![enter image description here](https://drive.google.com/open?id=1TZ5SDo6zlKj-528WTpgLXzR93Zz_LCWy)
-
+![Main image](https://i.imgur.com/fUzC6Mm.gif)
 
 
 1. User can click on a transaction history button.
 2. User will be prompt to the page where the transaction history will be provided with all the information regarding user&#39;s payment and request.
 
 
-![img1](https://drive.google.com/open?id=1U8ifQTErWgbFqEHRrUdod4a8UVyW9anz)
-![img2](https://drive.google.com/open?id=1iSPRP9PHBkX4GHudQL7MP37cFhrH3rWY)
-![img3](https://drive.google.com/open?id=1R00mj_AMnFTEmCzwC2OAUEIxKH0CJDyy)
-![img4](https://drive.google.com/open?id=1sjE1HblNa2dMiNuvUEeSAxT4zAGS8xfL)
+![img1](https://i.imgur.com/xRLQze9.png)
+![img2](https://i.imgur.com/MaAZQlM.png)
+![img3](https://i.imgur.com/zbndbou.png)
+![img4](https://i.imgur.com/6T2QWDj.png)
 
 		
 ## Use Case Diagram

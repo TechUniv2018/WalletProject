@@ -117,6 +117,7 @@ Alternate Workflow -
 
 1. The App will display an error message.
 2. The use case ends with a failure.
+
 ### Use case 4
 #### Add contact
 
@@ -124,11 +125,19 @@ _Actors_ _–_ Customer, Bank
 
 Description – This case describes how to add a friend or a contact to user&#39;s list.
 
+![Main image GIF](https://drive.google.com/open?id=1yPOZ3BdKKGyjs1qeKwEo7HFeT2l-G3OL)
+
 Normal Workflow –
 
 1. User clicks on Add button to add a friend to pay/request funds
 2. User will be prompt to the page where he can enter Account number/ phone number of a friend.
 3. Notification sent to the added user.
+
+![AddFriend1](https://drive.google.com/open?id=1z4YEDlEkZsynjUWVCFgTMAZuUPWkhcXz)
+![AddFriend2](https://drive.google.com/open?id=1MfVzYUiM0VGfcz-3BMgZJ5EUyQp4p9t0)
+![AddFriend3](https://drive.google.com/open?id=1aTH5FUNf5PPC-QXYslRZH2Qgb-H6IIKy)
+![AddFriend4](https://drive.google.com/open?id=1b1iqAoFfyVXtBaArTmHwVBQtwldiVfFC)
+
 ### Use case 5
 #### Pay funds to another user.
 
@@ -202,14 +211,27 @@ Description – This case describes how user gets notification regarding payment
 
 ### Use case 8
 ####  View transaction history
+## Use Case – View Transaction history
+
 _Actors_ – Customer, Bank
 
 Description – This case describes how user can see the transaction history.
 
    Normal Workflow –
 
+![enter image description here](https://drive.google.com/open?id=1TZ5SDo6zlKj-528WTpgLXzR93Zz_LCWy)
+
+
+
 1. User can click on a transaction history button.
 2. User will be prompt to the page where the transaction history will be provided with all the information regarding user&#39;s payment and request.
+
+
+![img1](https://drive.google.com/open?id=1U8ifQTErWgbFqEHRrUdod4a8UVyW9anz)
+![img2](https://drive.google.com/open?id=1iSPRP9PHBkX4GHudQL7MP37cFhrH3rWY)
+![img3](https://drive.google.com/open?id=1R00mj_AMnFTEmCzwC2OAUEIxKH0CJDyy)
+![img4](https://drive.google.com/open?id=1sjE1HblNa2dMiNuvUEeSAxT4zAGS8xfL)
+
 		
 ## Use Case Diagram
 

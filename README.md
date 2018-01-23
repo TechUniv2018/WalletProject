@@ -23,11 +23,12 @@ Our main aim is to develop and MVP digital bank wallet that supports the followi
     - [Case 9(Create group)](#use-case-9)
     - [Case 10(Split bill)](#use-case-10)
 - [Use Case Diagram](#use-case-diagram)
+- [Block Diagram](#block-diagram)
 
 ## **Use Cases**
 
 
-![alt text](https://image.ibb.co/d0WoYb/sc1.png "Description goes here")
+![alt text](https://image.ibb.co/d0WoYb/sc1.png)
 
 ### Use case 1
 #### Register a new Customer
@@ -234,3 +235,7 @@ Description – This case describes how user can see the transaction history.
 ## Use Case Diagram
 
 ![](https://preview.ibb.co/gUBerw/Screen_Shot_2018_01_22_at_1_54_11_PM.png)
+
+## Block Diagram
+
+![](https://raw.githubusercontent.com/abishekaditya/batua/master/block_diagram.png?token=AThrfP0hbE_zmhM1ljL9HJ-zIKtp15gXks5acLyVwA%3D%3D)

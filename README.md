@@ -24,6 +24,7 @@ Our main aim is to develop and MVP digital bank wallet that supports the followi
     - [Case 10(Split bill)](#use-case-10)
 - [Use Case Diagram](#use-case-diagram)
 - [Block Diagram](#block-diagram)
+- [ER Diagram](#er-diagram)
 
 ## **Use Cases**
 
@@ -239,3 +240,8 @@ Description – This case describes how user can see the transaction history.
 ## Block Diagram
 
 ![](https://raw.githubusercontent.com/abishekaditya/batua/master/block_diagram.png?token=AThrfP0hbE_zmhM1ljL9HJ-zIKtp15gXks5acLyVwA%3D%3D)
+
+## ER Diagram
+
+![](https://image.ibb.co/nida4G/erdplus_diagram_3.png)
+

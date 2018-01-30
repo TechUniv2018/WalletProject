@@ -245,3 +245,6 @@ Description – This case describes how user can see the transaction history.
 
 ![](https://image.ibb.co/nida4G/erdplus_diagram_3.png)
 
+## Database Schema
+
+![](/DBSchema.png)

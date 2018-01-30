@@ -1,0 +1,188 @@
+swagger: "2.0"
+
+info:
+  version: 1.0.0
+  title: Batua
+  description: A simple API to send and request money using batua
+
+schemes:
+  - https
+# host: batua.com
+# basePath: /api
+
+paths:
+  /register:
+    post:
+      summary: Create user
+      description: create new user.
+      parameters:
+      - in: body
+        name: body
+        description: Created user object
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        default:
+          description: successful operation
+ 
+  /login:
+    get:
+      summary: Logs user into the system
+      parameters:
+      - name: username
+        in: query
+        description: The user name for login
+        required: true
+        type: string
+      - name: password
+        in: query
+        description: The password for login in clear text
+        required: true
+        type: string
+        format: password
+      responses:
+        200:
+          description: successful operation
+          schema:
+             $ref: '#/definitions/User'
+        400:
+          description: Invalid username/password supplied
+          
+          
+  /send:
+    post:
+      summary: Sends money to a person
+      description: Adds a new transaction to the transaction table.
+      parameters:
+        - name: transaction
+          in: body
+          description: The transaction.
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        204:
+          description: money succesfully sent.
+        400:
+          description: money could not be sent.
+  
+  /request:
+    post:
+      summary: Requests money from a person
+      description: Adds a new request in the request table.
+      parameters:
+        - name: request
+          in: body
+          description: The request.
+          schema:
+            $ref: "#/definitions/Request"
+      responses:
+        204:
+          description: request successfully sent.
+        400:
+          description: request could not be sent.
+  
+  /history:        
+    get:
+      summary: Gets all transaction history of user
+      description: Returns a list containing all transactions of a person.
+      parameters:
+       - name: userId
+         in: query
+         description: user whos history is to be returned
+         type: integer
+      responses:
+        200:
+          description: All transactions of person
+          schema:
+            $ref: "#/definitions/Transactions"
+          
+  
+
+definitions:
+  Transaction:
+    required:
+      - transactionId
+      - fromId
+      - toId
+      - amount
+      - timestamp
+      
+    properties:
+      transactionId:
+        type: integer
+      fromId:
+        type: integer
+      toID:
+        type: integer
+      amount:
+        type: number
+        format: float
+        multipleOf: 0.01
+      timestamp:
+        type: string
+        format: "date-time"
+      reason:
+        type: string
+      category:
+        type: string
+  Transactions:
+    type: array
+    items:
+      $ref: "#/definitions/Transaction"
+      
+  Request:
+    required:
+      - requestId
+      - fromId
+      - toId
+      - amount
+      - timestamp
+      
+    properties:
+      requestId:
+        type: integer
+      fromId:
+        type: integer
+      toID:
+        type: integer
+      amount:
+        type: number
+        format: float
+        multipleOf: 0.01
+      timestamp:
+        type: string
+        format: "date-time"
+      reason:
+        type: string
+      category:
+        type: string
+ 
+  User:
+    required: 
+     - userId
+     - username
+     - password
+    properties:
+      userId:
+        type: integer
+        format: int64
+      username:
+        type: string
+      password:
+        type: string
+        format: password
+      balance:
+        type: number
+        format: float
+        multipleOf: 0.01
+        
+      Contacts:
+        type: array
+        items:
+          required:
+           - userId
+           
+          properties:
+            userId:
+              type: integer

@@ -243,7 +243,7 @@ Description – This case describes how user can see the transaction history.
 
 ## ER Diagram
 
-![](https://image.ibb.co/nida4G/erdplus_diagram_3.png)
+![](https://image.ibb.co/d5cepR/scc.png)
 
 ## Database Schema
 

@@ -102,7 +102,7 @@ Description – This case describes how to add a friend or a contact to user&#39
   3. Notification sent to the added user.
 
 
-![Main image GIF](https://i.imgur.com/SUdaWWH.gif)
+![Main image GIF](https://i.imgur.com/SUdaWWH.gif =250x250)
 
 ![AddFriend2](https://i.imgur.com/DVtNqTl.png)
 

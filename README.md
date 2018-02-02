@@ -102,7 +102,7 @@ Description – This case describes how to add a friend or a contact to user&#39
   3. Notification sent to the added user.
 
 
-![Main image GIF](https://i.imgur.com/SUdaWWH.gif =250x250)
+<img src='https://i.imgur.com/SUdaWWH.gif' width='500'>
 
 ![AddFriend2](https://i.imgur.com/DVtNqTl.png)
 
@@ -200,7 +200,7 @@ Description – This case describes how user can see the transaction history.
   2. User will be prompt to the page where the transaction history will be provided with all the information regarding user&#39;s payment and request.
 
 
-![Main image](https://i.imgur.com/fUzC6Mm.gif)
+<img src='https://i.imgur.com/fUzC6Mm.gif' width='500'>
 
 ![img1](https://i.imgur.com/RXuLweM.png)
     

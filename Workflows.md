@@ -23,12 +23,12 @@
  [Go back to README.md](https://github.com/TechUniv2018/WalletProject/blob/lakhara/README.md#use-case-2) 
 1. On Login page the user enter the Username and Password.
 2. After entering the right credentials, the user will be able to view his online account.
-  1. If username is invalid
-    1. The App will display an error message.
-    2. The use case ends with a failure.
-  2. If Password is invalid
-    1. The App will display an error message.
-    2. The use case ends with a failure.
+	  1. If username is invalid
+		    1. The App will display an error message.
+		    2. The use case ends with a failure.
+	  2. If Password is invalid
+		    1. The App will display an error message.
+		    2. The use case ends with a failure.
 
 ## Use case 3
 ### Forget/Change password.

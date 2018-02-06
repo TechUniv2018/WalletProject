@@ -7,7 +7,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "jest"
+    "test": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && jest",
+    "coverage": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && jest --coverage",
+    "start": "sequelize db:migrate && node server.js",
+    "sequelize": "sequelize"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 const Models = require('../../models');
 
-describe('check if data matches model', () => {
+describe('users: check if data matches model', () => {
   test('check if returned seeded data matches users model', () => Models.users.findAll().then((result) => {
     expect.assertions(result.length * 3);
     result.forEach((user) => {
@@ -11,7 +11,7 @@ describe('check if data matches model', () => {
   }));
 });
 
-describe('check size of table users', () => {
+describe('users: check size of seeded table', () => {
   test('check if seeded users table has size 1', () => {
     expect.assertions(1);
     return Models.users.findAll().then((result) => {

@@ -9,8 +9,8 @@ const route = [
     config: {
       validate: {
         payload: Joi.object({
-          userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9\_]*$/i),
-          password: Joi.string().min(4).max(20),
+          username: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9\_]*$/i),
+          // username: Joi.string().min(5).max(15),
         }),
       },
     },

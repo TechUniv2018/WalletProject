@@ -1,0 +1,40 @@
+{
+  "name": "walletproject",
+  "version": "1.0.0",
+  "description": "## **Objective**",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && jest",
+    "coverage": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && jest --coverage",
+    "start": "sequelize db:migrate && node server.js",
+    "sequelize": "sequelize"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TechUniv2018/WalletProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TechUniv2018/WalletProject/issues"
+  },
+  "homepage": "https://github.com/TechUniv2018/WalletProject#readme",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
+    "jest": "^22.1.4",
+    "sequelize-cli": "^3.2.0"
+  },
+  "dependencies": {
+    "hapi": "^16.6.2",
+    "pg": "^6.4.2",
+    "sequelize": "^4.32.6"
+  }
+}

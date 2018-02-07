@@ -7,8 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && jest",
-    "coverage": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && jest --coverage",
+    "test": "jest",
     "start": "sequelize db:migrate && node server.js",
     "sequelize": "sequelize"
   },
@@ -34,6 +33,7 @@
   },
   "dependencies": {
     "hapi": "^16.6.2",
+    "joi": "^13.1.2",
     "pg": "^6.4.2",
     "sequelize": "^4.32.6"
   }

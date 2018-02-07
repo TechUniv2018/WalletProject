@@ -12,4 +12,16 @@ describe('check server response code', () => {
       done();
     });
   });
+
+  test('Test for unsuccessful POST request reply code from the server', (done) => {
+    const request = {
+      method: 'POST',
+      url: '/login/validation',
+      payload: JSON.stringify({ username: '90m' }),
+    };
+    server.inject(request, (response) => {
+      expect(response.statusCode).toBe(400);
+      done();
+    });
+  });
 });

@@ -10,7 +10,7 @@ const route = [
       validate: {
         payload: Joi.object({
           username: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9\_]*$/i),
-          // username: Joi.string().min(5).max(15),
+          password: Joi.string().min(4).max(20),
         }),
       },
     },

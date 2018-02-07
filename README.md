@@ -37,7 +37,7 @@ _Actors_ – Customer, Bank
 
 _Description_ – This use case describes how to register a new customer using Aadhar card linking and using OTP sent to the linked mobile number with the user account.
 
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-1) –
+* [Workflow](./docs/Workflows.md#use-case-1) –
 
 ![alt text](https://image.ibb.co/d0WoYb/sc1.png)
      
@@ -48,7 +48,7 @@ _Actors_ – Customer, Bank
 
 _Description_ – This use case describes how to Login to an existing account
 
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-2) –
+* [Workflow](./docs/Workflows.md#use-case-2) –
 
 ### Use case 3
 #### Forget/Change password.
@@ -57,7 +57,7 @@ _Actors_ – Customer, Bank
 
 _Description_ – This use case describes how to change password (forgot password)
 
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-3)-
+* [Workflow](./docs/Workflows.md#use-case-3)-
 
 
 ### Use case 4
@@ -67,7 +67,7 @@ _Actors_ _–_ Customer, Bank
 
 Description – This case describes how to add a friend or a contact to user&#39;s list.
 
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-4) –
+* [Workflow](./docs/Workflows.md#use-case-4) –
 
 
 <img src='https://i.imgur.com/SUdaWWH.gif' width='500'>
@@ -83,7 +83,7 @@ _Actors –_ Customer, Bank
 
 Description – This case describes how to pay money to a friend of the User&#39;s list.
 
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-5) –
+* [Workflow](./docs/Workflows.md#use-case-5) –
 
 ![](https://media.giphy.com/media/l0HU1g95R2OjxP89q/giphy.gif)
 
@@ -91,7 +91,7 @@ Description – This case describes how to pay money to a friend of the User&#39
 
 #### Receive funds from another user
 Description –This case describes how funds are received
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-6) –
+* [Workflow](./docs/Workflows.md#use-case-6) –
     
 ![](https://media.giphy.com/media/3o751QgRAtqq7cl4Kk/giphy.gif)
 
@@ -103,7 +103,7 @@ Description –This case describes how funds are received
 
   Description –This case describes how to request money from another user.
 
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-6) –
+* [Workflow](./docs/Workflows.md#use-case-6) –
 
 ![](https://s14.postimg.org/i3xl4c6kx/flow.png)
 
@@ -111,7 +111,7 @@ Description –This case describes how funds are received
 
 **2. Another user requests funds from you**
 
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-6) – 
+* [Workflow](./docs/Workflows.md#use-case-6) – 
   
    
 ![](https://media.giphy.com/media/l49JRYrFWyHPBMKS4/giphy.gif)
@@ -128,7 +128,7 @@ _Actors_ –Customer, Bank
 Description – This case describes how user gets notification regarding payment/request.
 
 
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-7) – 
+* [Workflow](./docs/Workflows.md#use-case-7) – 
 
 ### Use case 8
 ####  View transaction history
@@ -138,7 +138,7 @@ _Actors_ – Customer, Bank
 
 Description – This case describes how user can see the transaction history.
 
-* [Workflow](https://github.com/TechUniv2018/WalletProject/blob/lakhara/Workflows.md#use-case-8) – 
+* [Workflow](./docs/Workflows.md#use-case-8) – 
 
 
 <img src='https://i.imgur.com/fUzC6Mm.gif' width='500'>

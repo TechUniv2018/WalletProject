@@ -2,7 +2,7 @@
 ## Use Case 1
 ### Register new customer
 
- [Go back to README.md](https://github.com/TechUniv2018/WalletProject/blob/lakhara/README.md#use-case-1) 
+ [Go back to README.md](../README.md#use-case-1) 
  
   1. The customer will click on the Register icon on the Home Page.
     1. If account number is invalid, use case ends with an error
@@ -20,7 +20,7 @@
 
 ## Use case 2:
 ### Login to an existing account
- [Go back to README.md](https://github.com/TechUniv2018/WalletProject/blob/lakhara/README.md#use-case-2) 
+ [Go back to README.md](../README.md#use-case-2) 
 1. On Login page the user enter the Username and Password.
 2. After entering the right credentials, the user will be able to view his online account.
 	  1. If username is invalid
@@ -33,7 +33,7 @@
 ## Use case 3
 ### Forget/Change password.
 
- [Go back to README.md](https://github.com/TechUniv2018/WalletProject/blob/lakhara/README.md#use-case-3) 
+ [Go back to README.md](../README.md#use-case-3) 
  
 * Workflow-
 
@@ -48,7 +48,7 @@
 ### Use case 4
 #### Add contact
 
- [Go back to README.md](https://github.com/TechUniv2018/WalletProject/blob/lakhara/README.md#use-case-4) 
+ [Go back to README.md](../README.md#use-case-4) 
  
 * Workflow - 
 
@@ -60,7 +60,7 @@
 ### Use case 5
 #### Pay funds to another user.
 
- [Go back to README.md](https://github.com/TechUniv2018/WalletProject/blob/lakhara/README.md#use-case-5) 
+ [Go back to README.md](../README.md#use-case-5) 
  
 * Normal Workflow –
 
@@ -86,7 +86,7 @@
 ### Request funds from another user.
 **1.  Request funds from another user.**
  
- [Go back to README.md](https://github.com/TechUniv2018/WalletProject/blob/lakhara/README.md#use-case-6) 
+ [Go back to README.md](../README.md#use-case-6) 
   
 * Workflow –
 
@@ -106,7 +106,7 @@
 ## Use case 7
 ### Get a notification for payment/request query
 
- [Go back to README.md](https://github.com/TechUniv2018/WalletProject/blob/lakhara/README.md#use-case-7) 
+ [Go back to README.md](../README.md#use-case-7) 
  
 * Workflow –
 
@@ -117,7 +117,7 @@
 ## Use case 8
 ###  View transaction history
 
- [Go back to README.md](https://github.com/TechUniv2018/WalletProject/blob/lakhara/README.md#use-case-8) 
+ [Go back to README.md](../README.md#use-case-8) 
  
 * Workflow –
    1. User can click on a transaction history button.

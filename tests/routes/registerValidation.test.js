@@ -98,4 +98,18 @@ describe('check server response code', () => {
       done();
     });
   });
+
+  test('Test for unsuccessful POST request because accountnumber only contains digits', (done) => {
+    const request = {
+      method: 'POST',
+      url: '/login/validation',
+      payload: JSON.stringify({
+        username: 'Margi_1013', password: '3ngv4@-_cmlve', firstName: 'margi', lastName: 'brahmbhatt', aadharNo: 123456789012, phone: '8141165366', accountNo: '12345678M9012',
+      }),
+    };
+    server.inject(request, (response) => {
+      expect(response.statusCode).toBe(400);
+      done();
+    });
+  });
 });

@@ -5,7 +5,7 @@ describe('check server response code', () => {
     const request = {
       method: 'POST',
       url: '/login/validation',
-      payload: JSON.stringify({ username: 'Margi_1013', password: '3ngv4@-_cmlve' }),
+      payload: JSON.stringify({ userName: 'Margi_1013', password: '3ngv4@-_cmlve' }),
     };
     server.inject(request, (response) => {
       expect(response.statusCode).toBe(200);
@@ -17,7 +17,7 @@ describe('check server response code', () => {
     const request = {
       method: 'POST',
       url: '/login/validation',
-      payload: JSON.stringify({ username: '90m', password: 'ngvwcmlve' }),
+      payload: JSON.stringify({ userName: '90m', password: 'ngvwcmlve' }),
     };
     server.inject(request, (response) => {
       expect(response.statusCode).toBe(400);
@@ -29,7 +29,7 @@ describe('check server response code', () => {
     const request = {
       method: 'POST',
       url: '/login/validation',
-      payload: JSON.stringify({ username: 'abcd efghijklmnopqrstuv', password: 'ngvwcmlve' }),
+      payload: JSON.stringify({ userName: 'abcd efghijklmnopqrstuv', password: 'ngvwcmlve' }),
     };
     server.inject(request, (response) => {
       expect(response.statusCode).toBe(400);
@@ -41,7 +41,7 @@ describe('check server response code', () => {
     const request = {
       method: 'POST',
       url: '/login/validation',
-      payload: JSON.stringify({ username: 'abcdefghijklmnopqrstuv', password: 'ng' }),
+      payload: JSON.stringify({ userName: 'abcdefghijklmnopqrstuv', password: 'ng' }),
     };
     server.inject(request, (response) => {
       expect(response.statusCode).toBe(400);
@@ -53,7 +53,7 @@ describe('check server response code', () => {
     const request = {
       method: 'POST',
       url: '/login/validation',
-      payload: JSON.stringify({ username: 'abcdefghijklmnopqrstuv', password: 'nghjkjtdvhgfty123456#@cfyvlubnmnjbhvcfg' }),
+      payload: JSON.stringify({ userName: 'abcdefghijklmnopqrstuv', password: 'nghjkjtdvhgfty123456#@cfyvlubnmnjbhvcfg' }),
     };
     server.inject(request, (response) => {
       expect(response.statusCode).toBe(400);

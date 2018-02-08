@@ -70,4 +70,32 @@ describe('check server response code', () => {
       done();
     });
   });
+
+  test('Test for unsuccessful POST request because phone number must only have numbers', (done) => {
+    const request = {
+      method: 'POST',
+      url: '/login/validation',
+      payload: JSON.stringify({
+        username: 'Margi_1013', password: '3ngv4@-_cmlve', firstName: 'margi', lastName: 'brahmbhatt', aadharNo: 123456789012, phone: '8141M15366', accountNo: '123456789012',
+      }),
+    };
+    server.inject(request, (response) => {
+      expect(response.statusCode).toBe(400);
+      done();
+    });
+  });
+
+  test('Test for unsuccessful POST request because phone number must only have 10 digits', (done) => {
+    const request = {
+      method: 'POST',
+      url: '/login/validation',
+      payload: JSON.stringify({
+        username: 'Margi_1013', password: '3ngv4@-_cmlve', firstName: 'margi', lastName: 'brahmbhatt', aadharNo: 123456789012, phone: '81418815366', accountNo: '123456789012',
+      }),
+    };
+    server.inject(request, (response) => {
+      expect(response.statusCode).toBe(400);
+      done();
+    });
+  });
 });

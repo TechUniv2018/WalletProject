@@ -43,20 +43,6 @@ describe('check server response code', () => {
     });
   });
 
-  test('Test for unsuccessful POST request because aadhar number can not be string', (done) => {
-    const request = {
-      method: 'POST',
-      url: '/register/validation',
-      payload: JSON.stringify({
-        userName: 'Margi_1013', password: '3ngv4@-_cmlve', firstName: 'margi', lastName: 'brahmbhatt', aadharNo: '123456789012', phone: '8141165366', accountNo: '123456789012',
-      }),
-    };
-    server.inject(request, (response) => {
-      expect(response.statusCode).toBe(400);
-      done();
-    });
-  });
-
 
   test('Test for unsuccessful POST request because phone number must only have numbers', (done) => {
     const request = {

@@ -7,8 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && jest",
-    "coverage": "sequelize db:seed:undo:all && sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all && jest --coverage",
+    "test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate && NODE_ENV=test sequelize db:seed:all && NODE_ENV=test jest --forceExit",
+    "coverage": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate && NODE_ENV=test sequelize db:seed:all && NODE_ENV=test jest --coverage",
     "start": "sequelize db:migrate && node server.js",
     "sequelize": "sequelize"
   },
@@ -27,8 +27,6 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1",
     "jest": "^22.1.4",
     "sequelize-cli": "^3.2.0"
   },

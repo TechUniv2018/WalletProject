@@ -1,21 +1,21 @@
 {
   "development": {
-    "username": "margi",
-    "password": "null",
+    "username": "teamsix",
+    "password": null,
     "database": "wallet_development",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "margi",
-    "password": "null",
+    "username": "teamsix",
+    "password": null,
     "database": "wallet_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "margi",
-    "password": "null",
+    "username": "teamsix",
+    "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "postgres"

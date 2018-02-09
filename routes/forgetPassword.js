@@ -3,26 +3,30 @@
 const sendMessage = require('./handler/sendOTP');
 const Models = require('../models');
 
-const getUserData = (userName) => {
-  const userInfo = Models.users.findOne({ where: { userName } }).then((userObject) => {
-    const userId = userObject.userId;
-    Models.userDetails.findOne({ where: { userId } }).then(item => ({
-      userId: item.userId,
-      userName: item.userName,
-      phone: item.userPhone,
-    }));
-  });
-  return userInfo;
-};
-
-const otpDB = (userId, otp) => Models.forgetpassword.create({
-  userId,
-  otp,
-  timestamp: Date.now,
+const getUserData = userName => new Promise((resolve) => {
+  // const userInfo = {};()
+  Models.users.findOne({ where: { userName } }) // Get userId for give username
+    .then((userObject) => {
+      Models.userDetails.findOne({ where: { userId: userObject.userId } })
+        .then((item) => {
+          resolve({
+            userId: item.userId,
+            userName,
+            phone: item.phone,
+          });
+        });
+    });
 });
 
+const otpDB = (userId, otp) => Models.forgotpassword.create({
+  userId,
+  otp,
+  timestamp: Date.now(),
+})
+  .then(() => 'Done');
+
 const timedout = (timestamp) => {
-  const currentTime = Date.now;
+  const currentTime = Date.now();
   const timeDifference = (currentTime - timestamp) / 1000;
   if (timeDifference > 300) {
     return true; // request is timedout
@@ -56,10 +60,14 @@ module.exports = [{
   path: '/forgetPassword',
   handler: (req, reply) => { // sends OTP to user
     const userName = req.payload.username;
-    const userInfo = getUserData(userName);
-    const otp = sendOTP(userInfo.phone);
-    otpDB(userInfo.userId, otp).then(() => {
-      reply('OTP sent on registered mobile');
+    // console.log(userName);
+    getUserData(userName).then((userInfo) => {
+      // console.log('userInfo: ', userInfo);
+      sendOTP(userInfo.phone).then((otp) => {
+        otpDB(userInfo.userId, otp).then(() => {
+          reply('OTP sent on registered mobile');
+        });
+      });
     });
   },
 },
@@ -70,7 +78,7 @@ module.exports = [{
     const rcvdOTP = req.payload.otp;
     const rcvdId = req.payload.userId;
     let userInfo = {};
-    Models.forgetpassword.findOne({ where: { userId: rcvdId } })
+    Models.forgotpassword.findOne({ where: { userId: rcvdId } })
       .then((item) => {
         Models.users.findOne({ where: { userId: rcvdId } })
           .then((userItem) => {

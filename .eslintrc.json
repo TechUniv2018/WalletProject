@@ -1,6 +1,6 @@
 {
     "extends": "airbnb-base",
-    "env": {
+    "env": {sa
         "jest": true
-    }
+    }as
 }

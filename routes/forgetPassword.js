@@ -1,4 +1,5 @@
-// routed here when user forgets his password and he has already recieved OTP/token
+// routed here when user forgets his password
+
 const sendMessage = require('./handler/sendOTP');
 const Models = require('../models');
 
@@ -14,7 +15,7 @@ const getUserData = (userName) => {
   return userInfo;
 };
 
-const otpDB = (userId, otp) => Models.forgetPasswordDB.create({
+const otpDB = (userId, otp) => Models.forgetpassword.create({
   userId,
   otp,
   timestamp: Date.now,
@@ -31,18 +32,18 @@ const timedout = (timestamp) => {
 };
 
 const sendOTP = (phone) => {
-  const otp = Math.floor(100000 + (Math.random() * 900000));
   // send otp to mobile here
-  sendMessage(phone, otp);
+  const otp = sendMessage(phone);
   return otp;
 };
 
 const verifyOTP = (item, userInfo, rcvdOTP) => {
   if (item.otp === rcvdOTP && !timedout(item.timestamp)) {
     const newPassword = Math.random().toString(36).slice(-8);
-    userInfo.password = newPassword;
+    const userInfoNew = userInfo;
+    userInfoNew.password = newPassword;
     // updating DB
-    Models.users.update(userInfo, { fields: ['password'] }).then(() => ('Password successfully reset'));
+    Models.users.update(userInfoNew, { fields: ['password'] }).then(() => ('Password successfully reset'));
   } else if (timedout(item.timestamp)) { // request timed out
     return ('Request timed out');
   }
@@ -69,7 +70,7 @@ module.exports = [{
     const rcvdOTP = req.payload.otp;
     const rcvdId = req.payload.userId;
     let userInfo = {};
-    Models.forgetPasswordDB.findOne({ where: { userId: rcvdId } })
+    Models.forgetpassword.findOne({ where: { userId: rcvdId } })
       .then((item) => {
         Models.users.findOne({ where: { userId: rcvdId } })
           .then((userItem) => {

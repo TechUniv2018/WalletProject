@@ -19,4 +19,3 @@ describe('users: check size of seeded table', () => {
     });
   });
 });
-

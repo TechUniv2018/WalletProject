@@ -18,12 +18,15 @@ const getUserData = userName => new Promise((resolve) => {
     });
 });
 
-const otpDB = (userId, otp) => Models.forgotpassword.create({
-  userId,
-  otp,
-  timestamp: Date.now(),
-})
-  .then(() => 'Done');
+const otpDB = (userId, otp) => new Promise((resolve) => {
+  Models.forgotpasswords.create({
+    userId,
+    otp,
+    timestamp: Date.now(),
+  }).then(() => {
+    resolve();
+  });
+});
 
 const timedout = (timestamp) => {
   const currentTime = Date.now();

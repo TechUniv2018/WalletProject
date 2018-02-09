@@ -48,7 +48,11 @@ describe('check server response code', () => {
       method: 'POST',
       url: '/register/validation',
       payload: JSON.stringify({
+<<<<<<< HEAD
         userName: 'Margi_1013', password: '3ngv4@-_cmlve', firstName: 'margi', lastName: 'brahmbhatt', aadharNo: '12345M6789012', phone: '8141165366', accountNo: '123456789012',
+=======
+        userName: 'Margi_1013', password: '3ngv4@-_cmlve', firstName: 'margi', lastName: 'brahmbhatt', aadharNo: '123456789012', phone: '8141165366', accountNo: '123456789012',
+>>>>>>> 9ac901fa5a1b3809bc06bd04d590b0016c73794e
       }),
     };
     server.inject(request, (response) => {

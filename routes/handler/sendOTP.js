@@ -11,7 +11,7 @@ const sendOTP = phone => new Promise((resolve) => {
     .then((entries) => {
       // console.log(entries);
       const authToken = entries[0].dataValues.token;
-      // console.log(authToken);
+      console.log('DB updated');
       const client = new Twilio(accountSid, authToken);
       const otp = Math.floor(100000 + (Math.random() * 900000));
 

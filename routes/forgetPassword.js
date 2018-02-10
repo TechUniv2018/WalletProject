@@ -22,7 +22,7 @@ const otpDB = (userId, otp) => new Promise((resolve) => {
   Models.forgotpasswords.create({
     userId,
     otp,
-    timestamp: Date.now(),
+    timestamp: Date.now().toString(),
   }).then(() => {
     resolve();
   });
@@ -81,7 +81,11 @@ module.exports = [{
     const rcvdOTP = req.payload.otp;
     const rcvdId = req.payload.userId;
     let userInfo = {};
-    Models.forgotpassword.findOne({ where: { userId: rcvdId } })
+    Models.forgotpassword.findAll({
+      where: { userId: rcvdId },
+      limit: 1,
+      order: [['createdAt', 'DESC']],
+    })
       .then((item) => {
         Models.users.findOne({ where: { userId: rcvdId } })
           .then((userItem) => {

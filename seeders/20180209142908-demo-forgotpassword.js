@@ -1,11 +1,13 @@
-// const time = Date.now();
-// const strTime = time.toString();
+const time = Date.now();
+const strTime = time.toString();
 
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert('forgotpasswords', [{
-    userid: 100,
+    userId: 100,
     otp: 100,
-    timestamp: '1518191112247',
+    timestamp: strTime,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   }], {}),
 
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('forgotpasswords', null, {}),

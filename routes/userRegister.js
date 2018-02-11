@@ -1,26 +1,12 @@
 const Model = require('../models');
 const bcrypt = require('bcryptjs');
 const Boom = require('boom');
-const Jwt = require('jsonwebtoken');
-
-const secret = require('../secret');
 
 function hashPassword(password, cb) {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(password, salt, (_, hash) => cb(err, hash));
   });
 }
-
-function createToken(user) {
-  return Jwt.sign({
-    userId: user.userId,
-    userName: user.userName,
-  }, secret, {
-    algorithm: 'HS256',
-    expiresIn: '1h',
-  });
-}
-
 
 const route = [{
   method: 'POST',
@@ -58,9 +44,6 @@ const route = [{
 
           reply(Object.assign(response, {
             success: true,
-            data: {
-              id_token: createToken(newUser),
-            },
           }));
         }).catch((error) => {
           reply(Object.assign(response, {

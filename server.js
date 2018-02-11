@@ -1,7 +1,9 @@
 const Hapi = require('hapi');
 const secret = require('./secret');
 const Routes = require('./routes');
-const Jwt = require('hapi-auth-jwt');
+const Jwt = require('hapi-auth-jwt2');
+const Model = require('./models');
+const validate = require('./validate');
 
 const server = new Hapi.Server();
 
@@ -10,14 +12,19 @@ server.connection({
   host: 'localhost',
 });
 
-server.route(Routes);
 server.register(Jwt);
-server.auth.strategy('jwt', 'jwt', 'required', {
+
+server.auth.strategy('jwt', 'jwt', {
   key: secret,
+  validateFunc: validate,
   verifyOptions: {
     algorithms: ['HS256'],
   },
 });
+
+server.auth.default('jwt');
+
+server.route(Routes);
 
 server.start(() => {
   console.log(`Server started at ${server.info.uri}`);

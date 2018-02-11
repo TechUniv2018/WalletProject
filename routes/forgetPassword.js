@@ -45,7 +45,7 @@ const sendOTP = (phone) => {
   return otp;
 };
 
-const verifyOTP = (userInfo, otpEntry, rcvdOTP) => {
+const verifyOTP = (userInfo, otpEntry, rcvdOTP) => new Promise((resolve) => {
   if (otpEntry.otp === parseInt(rcvdOTP) && !timedout(otpEntry.timestamp)) {
     const newPassword = Math.random().toString(36).slice(-8);
     const userInfoNew = {
@@ -58,19 +58,21 @@ const verifyOTP = (userInfo, otpEntry, rcvdOTP) => {
       { password: userInfoNew.password },
       { where: { userId: userInfoNew.userId } },
     )
-      .then(() => {
+      .then((result) => {
         console.log('here');
-        return 'Password successfully reset';
+        resolve('Password successfully reset');
       })
       .catch((err) => {
         console.log(err);
       });
   } else if (!timedout(otpEntry.timestamp)) { // otp is wrong
-    return ('OTP is wrong, please try again');
+    resolve('OTP is wrong, please try again');
   }
   // otp expired
-  return ('Request Timed out');
-};
+  else {
+    resolve('Request Timed out');
+  }
+});
 
 module.exports = [{
   method: 'POST',
@@ -102,8 +104,10 @@ module.exports = [{
         order: [['createdAt', 'DESC']],
       }).then((entry) => {
         const otpEntry = entry[0].dataValues;
-        const response = verifyOTP(userInfo, otpEntry, rcvdOTP);
-        reply(response);
+        verifyOTP(userInfo, otpEntry, rcvdOTP)
+          .then((response) => {
+            reply(response);
+          });
       });
     });
   },

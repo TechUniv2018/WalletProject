@@ -59,7 +59,6 @@ const verifyOTP = (userInfo, otpEntry, rcvdOTP) => new Promise((resolve) => {
       { where: { userId: userInfoNew.userId } },
     )
       .then((result) => {
-        console.log('here');
         resolve('Password successfully reset');
       })
       .catch((err) => {

@@ -16,13 +16,3 @@ describe('userDetails: check if data matches model', () => {
     });
   }));
 });
-
-describe('userDetails: check size of seeded table', () => {
-  test('check if seeded userDetails table has size 1', () => {
-    expect.assertions(1);
-    return Models.transactions.findAll().then((result) => {
-      expect(result.length).toBe(3);
-    });
-  });
-});
-

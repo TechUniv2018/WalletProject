@@ -1,5 +1,6 @@
 const server = require('../../server');
-
+const bcrypt = require('bcryptjs');
+const { hashPassword } = require('../../routes/userRegister');
 
 describe('request validation', () => {
   describe('Test for unsuccessful POST request because ', () => {
@@ -91,31 +92,48 @@ describe('request validation', () => {
 });
 
 describe('Request Authentication', () => {
-  test('should return error if user name already taken', (done) => {
+  test('should hash the password', (done) => {
+    const call = (_, hash) => {
+      expect(bcrypt.compareSync('ABC', hash)).toBe(true); done();
+    };
+    hashPassword('ABC', call);
+  });
+
+  test('should return error if username already taken', (done) => {
     const request = {
       method: 'POST',
       url: '/users',
-      payload: JSON.stringify({
-        userName: 'John_Doe', password: '3ngv4@-_cmlve', firstName: 'margi', lastName: 'brahmbhatt', aadharNo: 123456789012, phone: '8141165366', accountNo: '12345678M9012',
-      }),
+      payload: JSON.stringify({ userName: 'John_Doe', password: 'password' }),
     };
+
     server.inject(request, (response) => {
       expect(response.statusCode).toBe(400);
       done();
     });
   });
 
-  test('should return error if can not add details to db', (done) => {
+  test('should return error if can not insert to database', (done) => {
     const request = {
       method: 'POST',
       url: '/users',
-      payload: JSON.stringify({
-        userName: 'John_Does', password: null, firstName: 'margi', lastName: 'brahmbhatt', aadharNo: 123456789012, phone: '8141165366', accountNo: '12345678M9012',
-      }),
+      payload: JSON.stringify({ userName: 'John_Doe', password: null }),
     };
 
     server.inject(request, (response) => {
       expect(response.statusCode).toBe(400);
+      done();
+    });
+  });
+
+  test('should return 200 if successfully inserted into db', (done) => {
+    const request = {
+      method: 'POST',
+      url: '/users',
+      payload: JSON.stringify({ userName: 'New_Name', password: '123456' }),
+    };
+
+    server.inject(request, (response) => {
+      expect(response.statusCode).toBe(200);
       done();
     });
   });

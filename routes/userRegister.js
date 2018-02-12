@@ -8,7 +8,6 @@ function hashPassword(password, cb) {
     bcrypt.hash(password, salt, (_, hash) => cb(err, hash));
   });
 }
-
 const route = [{
   method: 'POST',
   path: '/users',
@@ -46,19 +45,15 @@ const route = [{
           password: hash,
         });
 
-        result.then((newUser) => {
-          if (!newUser) {
-            reply(Boom.notAcceptable('Failed at user creation'));
-          }
-
+        result.then(() => {
           reply({
             statusCode: 200,
             message: 'User successfully created',
           });
-        }).catch(err => reply({ err }));
+        }).catch(() => reply(Boom.notAcceptable('Failed at user creation')));
       });
     },
   },
 }];
 
-module.exports = route;
+module.exports = { route, hashPassword };

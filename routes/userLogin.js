@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const Jwt = require('jsonwebtoken');
 const Boom = require('boom');
 const secret = require('../secret');
+const Joi = require('joi');
 
 
 function createToken(user) {
@@ -20,23 +21,38 @@ const route = [{
   method: 'POST',
   path: '/users/login',
   config: {
+    validate: {
+      payload: Joi.object({
+        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i),
+        password: Joi.string().min(4).max(20),
+      }),
+    },
     auth: false,
     handler: (request, reply) => {
-      const { password, userName } = request.payload;
+      const {
+        password,
+        userName,
+      } = request.payload;
 
-      Model.users.findOne({ userName })
+      Model.users.findOne({
+        where: {
+          userName,
+        },
+      })
         .then((user) => {
-          bcrypt.compare(password, user.password)
-            .then(() => {
-              reply({
-                message: 'Logged In',
-                data: {
-                  id_token: createToken(user),
-                },
-              });
-            }).catch(() => {
-              Boom.badRequest('Please check username or password');
+          const isCorrect = bcrypt.compareSync(password, user.password);
+          if (isCorrect) {
+            reply({
+              message: 'Logged In',
+              data: {
+                id_token: createToken(user),
+              },
             });
+          } else {
+            reply(Boom.badRequest('Please check password'));
+          }
+        }).catch(() => {
+          reply(Boom.badRequest('Please check username'));
         });
     },
   },

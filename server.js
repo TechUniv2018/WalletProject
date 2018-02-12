@@ -2,13 +2,13 @@ const Hapi = require('hapi');
 const secret = require('./secret');
 const Routes = require('./routes');
 const Jwt = require('hapi-auth-jwt2');
-const Model = require('./models');
+
 const validate = require('./validate');
 
 const server = new Hapi.Server();
 
 server.connection({
-  port: 3001,
+  port: 3002,
   host: 'localhost',
 });
 
@@ -26,8 +26,8 @@ server.auth.default('jwt');
 
 server.route(Routes);
 
-server.start(() => {
-  console.log(`Server started at ${server.info.uri}`);
-});
+if (!module.parent) {
+  server.start();
+}
 
 module.exports = server;

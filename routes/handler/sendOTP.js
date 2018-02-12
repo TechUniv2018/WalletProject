@@ -15,16 +15,16 @@ const sendOTP = phone => new Promise((resolve) => {
       const client = new Twilio(accountSid, authToken);
       const otp = Math.floor(100000 + (Math.random() * 900000));
 
-      // client.messages.create({
-      //   body: `OTP for BATUA password reset: ${otp}`,
-      //   to: `+91${phone}`, // Text this number
-      //   from: '+19182057778', // From a valid Twilio number
-      // })
-      //   .then(() => {
-      console.log('Completed');
-      resolve(otp);
-      // })
-      // .catch(err => console.log(err));
+      client.messages.create({
+        body: `OTP for BATUA password reset: ${otp}`,
+        to: `+91${phone}`, // Text this number
+        from: '+19182057778', // From a valid Twilio number
+      })
+        .then(() => {
+          console.log('Completed');
+          resolve(otp);
+        })
+        .catch(err => console.log(err));
     });
 });
 

@@ -32,7 +32,7 @@ describe('check for verifying OTP', () => {
       method: 'POST',
       url: '/verifyOTP',
       payload: JSON.stringify({
-        username: 'John_Doe',
+        userName: 'John_Doe',
         otp: 12345,
       }),
     };
@@ -47,27 +47,12 @@ describe('check for verifying OTP', () => {
       method: 'POST',
       url: '/verifyOTP',
       payload: JSON.stringify({
-        username: 'John_Doe',
+        userName: 'John_Doe',
         otp: 12345,
       }),
     };
     server.inject(req, (response) => {
-      expect(response.result).toBe('OTP sent on registered mobile');
-      done();
-    });
-  });
-
-  test('/verifyOTP, sending correct OTP', (done) => {
-    const req = {
-      method: 'POST',
-      url: '/verifyOTP',
-      payload: JSON.stringify({
-        username: 'John_Doe',
-        otp: 12345,
-      }),
-    };
-    server.inject(req, (response) => {
-      expect(response.result).toBe('OTP sent on registered mobile');
+      expect(response.result).toBe('OTP is wrong, please try again');
       done();
     });
   });

@@ -2,7 +2,7 @@ const Models = require('../../models');
 
 describe('userDetails: check if data matches model', () => {
   test('check if returned seeded data matches users model', () => Models.userDetails.findAll().then((result) => {
-    expect.assertions(result.length * 6);
+    expect.assertions(result.length * 8);
     result.forEach((user) => {
       expect(user.userId).toBeDefined();
       expect(user.image).toBeDefined();
@@ -10,16 +10,9 @@ describe('userDetails: check if data matches model', () => {
       expect(user.phone).toBeDefined();
       expect(user.accountNo).toBeDefined();
       expect(user.balance).toBeDefined();
+      expect(user.firstName).toBeDefined();
+      expect(user.lastName).toBeDefined();
     });
   }));
-});
-
-describe('userDetails: check size of seeded table', () => {
-  test('check if seeded userDetails table has size 1', () => {
-    expect.assertions(1);
-    return Models.userDetails.findAll().then((result) => {
-      expect(result.length).toBe(1);
-    });
-  });
 });
 

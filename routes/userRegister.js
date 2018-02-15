@@ -36,6 +36,7 @@ const route = [{
         }
       }).then(() => {
         hashPassword(password, (error, hash) => Model.users.create({
+          // TODO: create with a user ID
           userName,
           password: hash,
         }));

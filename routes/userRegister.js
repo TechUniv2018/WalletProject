@@ -8,6 +8,9 @@ const route = [{
   method: 'POST',
   path: '/users',
   config: {
+    tags: ['api'],
+    description: 'register new user',
+    notes: 'register new user',
     validate: {
       payload: Joi.object({
         firstName: Joi.string().min(3).max(15).regex(/^[a-z]+$/i),

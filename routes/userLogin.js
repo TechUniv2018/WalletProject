@@ -21,6 +21,9 @@ const route = [{
   method: 'POST',
   path: '/users/login',
   config: {
+    tags: ['api'],
+    description: 'Log user in',
+    notes: 'log user in',
     validate: {
       payload: Joi.object({
         userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i),

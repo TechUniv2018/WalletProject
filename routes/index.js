@@ -1,5 +1,6 @@
 const ping = require('./ping');
-const loginvalidate = require('./loginvalidate');
-const registerValidation = require('./registerValidation');
+const userRegistration = require('./userRegister');
+const userLogin = require('./userLogin');
+const auth = require('./auth');
 
-module.exports = [].concat(ping).concat(loginvalidate).concat(registerValidation);
+module.exports = [].concat(ping, userRegistration, userLogin, auth);

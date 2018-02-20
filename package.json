@@ -40,6 +40,7 @@
     "jsonwebtoken": "^8.1.1",
     "jwt-decode": "^2.2.0",
     "pg": "^6.4.2",
-    "sequelize": "^4.32.6"
+    "sequelize": "^4.32.6",
+    "socket.io": "^2.0.4"
   }
 }

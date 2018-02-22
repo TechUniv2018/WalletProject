@@ -12,17 +12,17 @@ server.connection({
   host: 'localhost',
 });
 
-server.register(Jwt);
+// server.register(Jwt);
 
-server.auth.strategy('jwt', 'jwt', {
-  key: secret,
-  validateFunc: validate,
-  verifyOptions: {
-    algorithms: ['HS256'],
-  },
-});
+// server.auth.strategy('jwt', 'jwt', {
+//   key: secret,
+//   validateFunc: validate,
+//   verifyOptions: {
+//     algorithms: ['HS256'],
+//   },
+// });
 
-server.auth.default('jwt');
+// server.auth.default('jwt');
 
 server.route(Routes);
 

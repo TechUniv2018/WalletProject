@@ -3,6 +3,7 @@ module.exports = {
     userId: 1,
     phone: '1234567890',
     accountNo: '0987654321',
+    balance: 100,
     createdAt: new Date(),
     updatedAt: new Date(),
   }], {}),

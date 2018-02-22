@@ -6,10 +6,11 @@ module.exports = [{
   path: '/transaction/receive',
   config: {
     validate: {
+      // auth: 'jwt',
       payload: Joi.object({
         from: Joi.number().integer().min(0),
         amount: Joi.number().integer().min(0),
-        decision: Joi.string().min(2).max(2),
+        decision: Joi.string().min(2).max(3),
       }),
     },
   },
@@ -17,7 +18,8 @@ module.exports = [{
     const fromId = req.payload.from;
     const amt = req.payload.amount;
     const goAhead = req.payload.decision;
-    const currentUserId = req.auth.credentials.userId;
+    const currentUserId = 1;
+    // const currentUserId = req.auth.credentials.userId;
     if (goAhead === 'NO') {
       rcvHandler(fromId, currentUserId, amt, 0).then(() => {
         // send notification back at fromId

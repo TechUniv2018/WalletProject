@@ -3,7 +3,9 @@ const bcrypt = require('bcryptjs');
 const Jwt = require('jsonwebtoken');
 const Boom = require('boom');
 const secret = require('../secret');
-const Joi = require('joi');
+
+const loginValidation = require('../validations/routes/userLogin');
+const lopginSwagger = require('../swagger/routes/userLogin');
 
 
 function createToken(user) {
@@ -24,11 +26,11 @@ const route = [{
     tags: ['api'],
     description: 'Log user in',
     notes: 'log user in',
+    plugins: {
+      'hapi-swagger': lopginSwagger,
+    },
     validate: {
-      payload: Joi.object({
-        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i),
-        password: Joi.string().min(4).max(20),
-      }),
+      payload: loginValidation,
     },
     auth: false,
   },

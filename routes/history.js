@@ -1,6 +1,10 @@
 const models = require('../models');
 const Sequelize = require('sequelize');
 
+const historySwagger = require('../swagger/routes/history');
+const historyHeaderValidation = require('../validations/routes/history');
+
+
 const getHistory = id => models.transactions.findAll({
   where: {
     [Sequelize.Op.or]: [{ fromId: id }, { toId: id }],
@@ -12,15 +16,20 @@ module.exports = {
   path: '/transactions/history',
   config: {
     auth: 'jwt',
-    // Include this API in swagger documentation
     tags: ['api'],
-    description: 'Get Transaction history',
-    notes: 'Get All transaction history',
+    description: 'Get Transaction history for  current user',
+    notes: 'Get All transaction history for current user',
+    plugins: {
+      'hapi-swagger': historySwagger,
+    },
+    validate: {
+      headers: historyHeaderValidation,
+    },
   },
   handler: (request, response) => {
     getHistory(request.auth.credentials.userId).then((history) => {
       response({
-        statusCose: 200,
+        statusCode: 200,
         history,
       });
     });

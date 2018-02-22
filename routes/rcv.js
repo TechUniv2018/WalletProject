@@ -1,8 +1,18 @@
 const rcvHandler = require('./Handler/rcvHandler');
+const Joi = require('joi');
 
 module.exports = [{
   method: 'POST',
   path: '/transaction/receive',
+  config: {
+    validate: {
+      payload: Joi.object({
+        from: Joi.number().integer().min(0),
+        amount: Joi.number().integer().min(0),
+        decision: Joi.string().min(2).max(2),
+      }),
+    },
+  },
   handler: (req, reply) => {
     const fromId = req.payload.from;
     const amt = req.payload.amount;

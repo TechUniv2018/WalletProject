@@ -27,7 +27,10 @@ server.auth.default('jwt');
 server.route(Routes);
 
 if (!module.parent) {
-  server.start();
+  server.start((err) => {
+    if (err) { console.log(err); }
+    console.log('Server listening on: ');
+  });
 }
 
 module.exports = server;

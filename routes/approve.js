@@ -7,15 +7,13 @@ module.exports = [{
     const fromId = req.payload.from;
     const amt = req.payload.amount;
     const goAhead = req.payload.decision;
-    // const currentUserId = getFromAuths;
+    const currentUserId = req.auth.credentials.userId;
     if (goAhead === 'NO') {
       approveHandler(fromId, currentUserId, amt, 0).then(() => {
-        // send notification back at fromId
         reply('Transaction cancelled');
       });
     } else {
       approveHandler(fromId, currentUserId, amt, 1).then(() => {
-        // send notification back at fromId
         reply('Amount transferred');
       });
     }

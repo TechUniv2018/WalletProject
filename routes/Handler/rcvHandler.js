@@ -1,7 +1,7 @@
 const Models = require('../../models');
 
 const transferMoney = (fromId, currentUserId, amt) => new Promise((resolve) => {
-  Models.userDetails.findOne({ where: { userId: currentUserId } }) // increase money from currentUser
+  Models.userDetails.findOne({ where: { userId: currentUserId } })// increase money from currentUser
     .then((currentUserInfo) => {
       const newBalance = currentUserInfo.balance + amt; // get current balance
       Models.userDetails.update(

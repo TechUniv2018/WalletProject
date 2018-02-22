@@ -99,7 +99,30 @@ describe('request validation', () => {
 });
 
 describe('functionality tests', () => {
-  test('Responds with 200 status code when provided credentials', (done) => {
+  test('Updates status when transaction is completed', (done) => {
+    const request = {
+      method: 'POST',
+      url: '/transactions/receive',
+      credentials: {
+        userId: 1,
+        userName: 'John_Doe',
+      },
+      payload: {
+        from: 3,
+        amount: 100,
+        decision: 'YES',
+      },
+    };
+    server.inject(request, () => {
+      Models.transactions.findOne({ where: { fromId: 3, toId: 1 } })
+        .then((row) => {
+          expect(row.status).toEqual('COMPLETED');
+          done();
+        });
+    });
+  });
+
+  test('Updates status when transaction is failed', (done) => {
     const request = {
       method: 'POST',
       url: '/transactions/receive',
@@ -110,12 +133,15 @@ describe('functionality tests', () => {
       payload: {
         from: 2,
         amount: 100,
-        decision: 'YES',
+        decision: 'NO',
       },
     };
-    server.inject(request, (response) => {
-      expect(response.statusCode).toBe(200);
-      done();
+    server.inject(request, () => {
+      Models.transactions.findOne({ where: { fromId: 2, toId: 1 } })
+        .then((row) => {
+          expect(row.status).toEqual('FAILED');
+          done();
+        });
     });
   });
 });

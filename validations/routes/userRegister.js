@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const registerValidation = Joi.object({
+const registerPayloadValidation = Joi.object({
   firstName: Joi.string().min(3).max(15).regex(/^[a-z]+$/i)
     .example('Jane'),
   lastName: Joi.string().min(3).max(15).regex(/^[a-z]*$/i)
@@ -15,4 +15,4 @@ const registerValidation = Joi.object({
   password: Joi.string().min(4).max(20).example('password'),
 });
 
-module.exports = registerValidation;
+module.exports = registerPayloadValidation;

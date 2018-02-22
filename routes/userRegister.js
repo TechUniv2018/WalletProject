@@ -2,7 +2,7 @@ const Model = require('../models');
 const hashPassword = require('../utils/hashPassword');
 const Boom = require('boom');
 
-const registerValidation = require('../validations/routes/userRegister');
+const registerPayloadValidation = require('../validations/routes/userRegister');
 const registerSwagger = require('../swagger/routes/userRegister');
 
 const route = [{
@@ -16,7 +16,7 @@ const route = [{
       'hapi-swagger': registerSwagger,
     },
     validate: {
-      payload: registerValidation,
+      payload: registerPayloadValidation,
     },
     auth: false,
   },

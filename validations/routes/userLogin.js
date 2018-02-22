@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-module.exports = Joi.object({
+const loginPayloadValidation = Joi.object({
   userName: Joi.string()
     .min(5)
     .max(15)
@@ -11,3 +11,5 @@ module.exports = Joi.object({
     .max(20)
     .example('password'),
 });
+
+module.exports = loginPayloadValidation;

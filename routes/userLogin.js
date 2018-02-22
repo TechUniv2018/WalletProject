@@ -4,8 +4,8 @@ const Jwt = require('jsonwebtoken');
 const Boom = require('boom');
 const secret = require('../secret');
 
-const loginValidation = require('../validations/routes/userLogin');
-const lopginSwagger = require('../swagger/routes/userLogin');
+const loginPayloadValidation = require('../validations/routes/userLogin');
+const loginSwagger = require('../swagger/routes/userLogin');
 
 
 function createToken(user) {
@@ -27,10 +27,10 @@ const route = [{
     description: 'Log user in',
     notes: 'log user in',
     plugins: {
-      'hapi-swagger': lopginSwagger,
+      'hapi-swagger': loginSwagger,
     },
     validate: {
-      payload: loginValidation,
+      payload: loginPayloadValidation,
     },
     auth: false,
   },

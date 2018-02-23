@@ -25,12 +25,13 @@ const contactAddSwagger = {
         message: Joi.string().example('Added a friend'),
       }).label('Result'),
     },
+    400: { description: 'Bad Request' },
     401: { description: 'Unauthorized' },
   },
 };
 
 const contactAddValidation = Joi.object({
-  friendId: Joi.string().example('2'),
+  friendId: Joi.number().example(2),
 });
 
 module.exports = [{
@@ -73,7 +74,7 @@ module.exports = [{
   path: '/contacts',
   config: {
     tags: ['api'],
-    description: 'add a contacts for the users',
+    description: 'add a contact for the current user',
     notes: 'inerst into database the id of the contact',
     plugins: {
       'hapi-swagger': contactAddSwagger,
@@ -81,6 +82,19 @@ module.exports = [{
     validate: { headers: headerValidation, payload: contactAddValidation },
   },
   handler: (request, reply) => {
-    reply('wo0hoo');
+    const { friendId } = request.payload;
+    const { userId } = request.auth.credentials;
+
+    if (friendId === userId) {
+      reply({ message: 'Can\'t add yourself' }).code(400);
+    }
+
+    model.users.findOne({ where: { userId: friendId } }).then((result) => {
+      if (result === null) {
+        reply({ message: 'User doesn\'t exist' }).code(400);
+      } else {
+        model.contacts.findOrCreate({ where: { userId, friendId }, defaults: { userId, friendId } }).then(() => reply({ message: 'Successfully added' }).code(200));
+      }
+    });
   },
 }];

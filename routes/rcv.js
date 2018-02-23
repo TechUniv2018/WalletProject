@@ -6,9 +6,9 @@ module.exports = [{
   method: 'POST',
   path: '/transaction/receive',
   config: {
-    // auth: 'jwt',
+    // // auth: 'jwt',
     tags: ['api'],
-    description: 'Handles approving a money request',
+    description: 'Handles receiving a money request',
     plugins: {
       'hapi-swagger': receiveSwagger,
     },

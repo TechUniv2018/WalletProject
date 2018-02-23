@@ -6,8 +6,8 @@ const receiveMoneySwagger = {
       description: 'Success',
       schema: Joi.object({
         message: Joi.string().example('Transaction completed'),
-      }),
-    }.label('Result'),
+      }).label('Result'),
+    },
   },
   400: { description: 'Invalid request' },
   401: { description: 'Unauthorized' },

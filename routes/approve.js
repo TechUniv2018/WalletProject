@@ -33,8 +33,10 @@ module.exports = [{
         reply('Transaction cancelled');
       });
     } else {
-      approveHandler(fromId, currentUserId, amt, 1).then((resolve, reject) => {
-        if (resolve) { reply('Amount transferred'); } else { reply('insufficient balance'); }
+      approveHandler(fromId, currentUserId, amt, 1).then((resolve) => {
+        reply('Amount transferred');
+      }).catch(() => {
+        reply('insufficient balance');
       });
     }
   },

@@ -122,6 +122,29 @@ describe('functionality tests', () => {
     });
   });
 
+  test('Transaction is approved but user has insufficient balance', (done) => {
+    const request = {
+      method: 'POST',
+      url: '/transactions/approve',
+      credentials: {
+        userId: 1,
+        userName: 'John_Doe',
+      },
+      payload: {
+        from: 2,
+        amount: 1000,
+        decision: 'NO',
+      },
+    };
+    server.inject(request, () => {
+      Models.transactions.findOne({ where: { fromId: 2, toId: 1 } })
+        .then((row) => {
+          expect(row.status).toEqual('FAILED');
+          done();
+        });
+    });
+  });
+
   test('Updates status when transaction is failed', (done) => {
     const request = {
       method: 'POST',

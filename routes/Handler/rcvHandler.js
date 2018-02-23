@@ -14,6 +14,7 @@ const transferMoney = (fromId, currentUserId, amt) => new Promise((resolve) => {
           where: {
             fromId,
             toId: currentUserId,
+            status: 'PENDING',
           },
         })
           .then(() => {
@@ -37,6 +38,7 @@ const restoreMoney = (fromId, currentUserId, amt) => new Promise((resolve) => {
           where: {
             fromId,
             toId: currentUserId,
+            status: 'PENDING',
           },
         })
           .then(() => {

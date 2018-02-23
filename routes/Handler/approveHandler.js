@@ -60,6 +60,7 @@ const cancelTransaction = (fromId, currentUserId) => new Promise((resolve) => {
     where: {
       fromId,
       toId: currentUserId,
+      status: 'PENDING',
     },
   })
     .then(() => {
@@ -73,7 +74,17 @@ const handlerFn = (fromId, currentUserId, amt, decision) => new Promise((resolve
     transferMoney(fromId, currentUserId, amt).then(() => {
       resolve();
     }).catch((err) => {
-      reject(new Error(err.message));
+      Models.transactions.update({
+        status: 'FAILED',
+      }, {
+        where: {
+          fromId,
+          toId: currentUserId,
+          status: 'PENDING',
+        },
+      }).then(() => {
+        reject(new Error(err.message));
+      });
     });
   } else {
     cancelTransaction(fromId, currentUserId).then(() => {

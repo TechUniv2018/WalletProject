@@ -5,6 +5,13 @@ const Models = require('../models');
 const forgetPasswordSwagger = require('../swagger/routes/forgetpassword');
 const verifyOTPSwagger = require('../swagger/routes/verifyOTP');
 const Joi = require('joi');
+const bcrypt = require('bcryptjs');
+
+function hashPassword(password, cb) {
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(password, salt, (_, hash) => cb(err, hash));
+  });
+}
 
 const getUserData = userName => new Promise((resolve) => {
   // const userInfo = {};()
@@ -54,24 +61,22 @@ const verifyOTP = (userInfo, otpEntry, rcvdOTP) => new Promise((resolve) => {
     const userInfoNew = {
       userId: userInfo.userId,
       userName: userInfo.userName,
-      password: newPassword,
     };
     // updating DB
-    Models.users.update(
-      { password: userInfoNew.password },
-      { where: { userId: userInfoNew.userId } },
-    )
-      .then((result) => {
-        resolve('Password successfully reset');
+    hashPassword(newPassword, (_, hashedPassword) => {
+      Models.users.update(
+        { password: hashedPassword },
+        { where: { userId: userInfoNew.userId } },
+      ).then(() => {
+        resolve('Password successfully reset with ', newPassword);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   } else if (!timedout(otpEntry.timestamp)) { // otp is wrong
     resolve('OTP is wrong, please try again');
-  }
-  // otp expired
-  else {
+  } else { // otp expired
     resolve('Request Timed out');
   }
 });
@@ -88,9 +93,13 @@ module.exports = [{
       'hapi-swagger': forgetPasswordSwagger,
     },
     validate: {
+      headers: Joi.object({
+        authorization: Joi.string(),
+      }).unknown(),
       payload: Joi.object({
-        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i),
-        userId: Joi.number().integer(),
+        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i)
+          .example('John_Doe'),
+        userId: Joi.number().integer().example(1),
       }),
     },
   },
@@ -116,9 +125,13 @@ module.exports = [{
       'hapi-swagger': verifyOTPSwagger,
     },
     validate: {
+      headers: Joi.object({
+        authorization: Joi.string(),
+      }).unknown(),
       payload: Joi.object({
-        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i),
-        otp: Joi.number().integer().min(6).max(6),
+        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i)
+          .example('John_Doe'),
+        otp: Joi.number().integer().min(100000).max(999999),
       }),
     },
   },

@@ -13,6 +13,7 @@ const sendOTP = phone => new Promise((resolve) => {
       const authToken = entries[0].dataValues.token;
       console.log('DB updated');
       const client = new Twilio(accountSid, authToken);
+      // TODO: Add seed for random
       const otp = Math.floor(100000 + (Math.random() * 900000));
 
       client.messages.create({

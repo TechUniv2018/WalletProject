@@ -5,7 +5,11 @@ describe('check for sending OTP', () => {
     const req = {
       method: 'POST',
       url: '/forgetPassword',
-      payload: JSON.stringify({ username: 'John_Doe' }),
+      credentials: {
+        userId: 1,
+        userName: 'John_Doe',
+      },
+      payload: JSON.stringify({ userName: 'John_Doe' }),
     };
     server.inject(req, (response) => {
       expect(response.statusCode).toEqual(200);
@@ -17,7 +21,11 @@ describe('check for sending OTP', () => {
     const req = {
       method: 'POST',
       url: '/forgetPassword',
-      payload: JSON.stringify({ username: 'John_Doe' }),
+      credentials: {
+        userId: 1,
+        userName: 'John_Doe',
+      },
+      payload: JSON.stringify({ userName: 'John_Doe' }),
     };
     server.inject(req, (response) => {
       expect(response.result).toBe('OTP sent on registered mobile');
@@ -31,9 +39,13 @@ describe('check for verifying OTP', () => {
     const req = {
       method: 'POST',
       url: '/verifyOTP',
+      credentials: {
+        userId: 1,
+        userName: 'John_Doe',
+      },
       payload: JSON.stringify({
         userName: 'John_Doe',
-        otp: 12345,
+        otp: 123456,
       }),
     };
     server.inject(req, (response) => {
@@ -46,9 +58,13 @@ describe('check for verifying OTP', () => {
     const req = {
       method: 'POST',
       url: '/verifyOTP',
+      credentials: {
+        userId: 1,
+        userName: 'John_Doe',
+      },
       payload: JSON.stringify({
         userName: 'John_Doe',
-        otp: 12345,
+        otp: 123456,
       }),
     };
     server.inject(req, (response) => {

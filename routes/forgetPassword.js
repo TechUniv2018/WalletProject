@@ -77,7 +77,7 @@ module.exports = [{
   method: 'POST',
   path: '/forgetPassword',
   handler: (req, reply) => { // sends OTP to user
-    const userName = req.payload.username;
+    const { userName } = req.auth.credentials;
     // console.log(userName);
     getUserData(userName).then((userInfo) => {
       // console.log('userInfo: ', userInfo);
@@ -94,20 +94,17 @@ module.exports = [{
   path: '/verifyOTP',
   handler: (req, reply) => {
     const rcvdOTP = req.payload.otp;
-    const rcvdName = req.payload.userName;
-    getUserData(rcvdName).then((userInfo) => { // get userId through userName
-      console.log(userInfo);
-      Models.forgotpasswords.findAll({ // Get latest otp info
-        where: { userId: userInfo.userId },
-        limit: 1,
-        order: [['createdAt', 'DESC']],
-      }).then((entry) => {
-        const otpEntry = entry[0].dataValues;
-        verifyOTP(userInfo, otpEntry, rcvdOTP)
-          .then((response) => {
-            reply(response);
-          });
-      });
+    const userInfo = req.auth.credentials;
+    Models.forgotpasswords.findAll({ // Get latest otp info
+      where: { userId: userInfo.userId },
+      limit: 1,
+      order: [['createdAt', 'DESC']],
+    }).then((entry) => {
+      const otpEntry = entry[0].dataValues;
+      verifyOTP(userInfo, otpEntry, rcvdOTP)
+        .then((response) => {
+          reply(response);
+        });
     });
   },
 }];

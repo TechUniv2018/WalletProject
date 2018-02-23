@@ -34,8 +34,12 @@
   },
   "dependencies": {
     "hapi": "^16.6.2",
+    "hapi-swagger": "^9.1.1",
+    "inert": "^5.1.0",
+    "joi": "^13.1.2",
     "pg": "^6.4.2",
     "sequelize": "^4.32.6",
-    "twilio": "^3.11.2"
+    "twilio": "^3.11.3",
+    "vision": "^5.3.1"
   }
 }

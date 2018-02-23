@@ -18,9 +18,9 @@ module.exports = [{
         authorization: Joi.string(),
       }).unknown(),
       payload: Joi.object({
-        from: Joi.number().integer().min(0),
-        amount: Joi.number().integer().min(0),
-        decision: Joi.string().min(2).max(3),
+        from: Joi.number().integer().min(0).required(),
+        amount: Joi.number().integer().min(0).required(),
+        decision: Joi.string().min(2).max(3).required(),
       }),
 
     },

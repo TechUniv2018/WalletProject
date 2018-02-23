@@ -47,7 +47,20 @@ module.exports = {
     type: 2,
     createdAt: new Date(),
     updatedAt: new Date(),
-  }], {}),
+  }, {
+    transactionId: 17111,
+    fromId: 2,
+    toId: 1,
+    amount: 1000,
+    reason: 'borrowed money',
+    status: 'PENDING',
+    timeStamp: new Date(),
+    category: 'travel',
+    type: 2,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  ], {}),
 
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('transactions', null, {}),
 };

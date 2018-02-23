@@ -5,10 +5,10 @@ describe('url validation', () => {
   test('Responds with 200 status code when provided credentials', (done) => {
     const request = {
       method: 'POST',
-      url: '/transactions/approve',
+      url: '/transaction/approve',
       credentials: {
-        userId: 1,
-        userName: 'John_Doe',
+        userId: 3,
+        userName: 'Bob_B',
       },
       payload: {
         from: 2,
@@ -25,7 +25,7 @@ describe('url validation', () => {
   test('Responds with 401 status code when no credentials are provided', (done) => {
     const request = {
       method: 'POST',
-      url: '/transactions/approve',
+      url: '/transaction/approve',
       payload: {
         from: 2,
         amount: 100,
@@ -43,7 +43,7 @@ describe('request validation', () => {
   test('rejects request if from is not provided', (done) => {
     const request = {
       method: 'POST',
-      url: '/transactions/approve',
+      url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
@@ -62,7 +62,7 @@ describe('request validation', () => {
   test('rejects request if amount is not provided', (done) => {
     const request = {
       method: 'POST',
-      url: '/transactions/approve',
+      url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
@@ -81,7 +81,7 @@ describe('request validation', () => {
   test('rejects request if user decision is not provided', (done) => {
     const request = {
       method: 'POST',
-      url: '/transactions/approve',
+      url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
@@ -102,7 +102,7 @@ describe('functionality tests', () => {
   test('Updates status when transaction is completed', (done) => {
     const request = {
       method: 'POST',
-      url: '/transactions/approve',
+      url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
@@ -125,7 +125,7 @@ describe('functionality tests', () => {
   test('Transaction is approved but user has insufficient balance', (done) => {
     const request = {
       method: 'POST',
-      url: '/transactions/approve',
+      url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
@@ -137,7 +137,7 @@ describe('functionality tests', () => {
       },
     };
     server.inject(request, () => {
-      Models.transactions.findOne({ where: { fromId: 2, toId: 1 } })
+      Models.transactions.findOne({ where: { fromId: 2, toId: 1, amount: 1000 } })
         .then((row) => {
           expect(row.status).toEqual('FAILED');
           done();
@@ -148,7 +148,7 @@ describe('functionality tests', () => {
   test('Updates status when transaction is failed', (done) => {
     const request = {
       method: 'POST',
-      url: '/transactions/approve',
+      url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
@@ -160,7 +160,7 @@ describe('functionality tests', () => {
       },
     };
     server.inject(request, () => {
-      Models.transactions.findOne({ where: { fromId: 2, toId: 1 } })
+      Models.transactions.findOne({ where: { fromId: 2, toId: 1, amount: 100 } })
         .then((row) => {
           expect(row.status).toEqual('FAILED');
           done();

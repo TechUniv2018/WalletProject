@@ -37,12 +37,12 @@
     "hapi": "^16.6.2",
     "hapi-auth-basic": "^4.2.0",
     "hapi-auth-jwt2": "^4.0.0",
-    "jsonwebtoken": "^8.1.1",
-    "jwt-decode": "^2.2.0",
-    "pg": "^6.4.2",
     "hapi-swagger": "^7.10.0",
     "inert": "^4.2.1",
     "joi": "^13.1.2",
+    "jsonwebtoken": "^8.1.1",
+    "jwt-decode": "^2.2.0",
+    "pg": "^6.4.2",
     "sequelize": "^4.32.6",
     "vision": "^4.1.1"
   }

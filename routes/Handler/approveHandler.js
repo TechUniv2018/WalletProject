@@ -1,16 +1,20 @@
 const Models = require('../../models');
 
-const decreaseBalance = (fromId, amt) => new Promise((resolve) => {
+const decreaseBalance = (fromId, amt) => new Promise((resolve, reject) => {
   Models.userDetails.findOne({ where: { userId: fromId } })
     .then((userObject) => {
-      const newBalance = amt - userObject.balance;
-      Models.userDetails.update(
-        { balance: newBalance },
-        { where: { userId: fromId } },
-      )
-        .then(() => {
-          resolve();
-        });
+      const newBalance = userObject.balance - amt;
+      if (newBalance >= 0) {
+        Models.userDetails.update(
+          { balance: newBalance },
+          { where: { userId: fromId } },
+        )
+          .then(() => {
+            resolve();
+          });
+      } else {
+        reject(new Error('Insufficient Balance'));
+      }
     });
 });
 
@@ -28,7 +32,7 @@ const increaseBalance = (currentUserId, amt) => new Promise((resolve) => {
     });
 });
 
-const transferMoney = (fromId, currentUserId, amt) => new Promise((resolve) => {
+const transferMoney = (fromId, currentUserId, amt) => new Promise((resolve, reject) => {
   decreaseBalance(fromId, amt).then(() => {
     increaseBalance(currentUserId, amt).then(() => {
       Models.transactions.update({
@@ -42,6 +46,8 @@ const transferMoney = (fromId, currentUserId, amt) => new Promise((resolve) => {
         resolve();
       });
     });
+  }).catch((err) => {
+    reject(new Error(err).message);
   });
 });
 
@@ -62,10 +68,12 @@ const cancelTransaction = (fromId, currentUserId) => new Promise((resolve) => {
 });
 
 
-const handlerFn = (fromId, currentUserId, amt, decision) => new Promise((resolve) => {
+const handlerFn = (fromId, currentUserId, amt, decision) => new Promise((resolve, reject) => {
   if (decision) {
     transferMoney(fromId, currentUserId, amt).then(() => {
       resolve();
+    }).catch((err) => {
+      reject(new Error(err.message));
     });
   } else {
     cancelTransaction(fromId, currentUserId).then(() => {

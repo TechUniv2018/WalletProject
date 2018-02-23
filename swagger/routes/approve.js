@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const receiveMoneySwagger = {
+const approveMoneySwagger = {
   responses: {
     200: {
       description: 'Success',
@@ -14,4 +14,4 @@ const receiveMoneySwagger = {
 };
 
 
-module.exports = receiveMoneySwagger;
+module.exports = approveMoneySwagger;

@@ -10,3 +10,12 @@ describe('users: check if data matches model', () => {
     });
   }));
 });
+
+describe('users: check size of seeded table', () => {
+  test('check if seeded users table has size 1', () => {
+    expect.assertions(1);
+    return Models.users.findAll().then((result) => {
+      expect(result.length).toBe(1);
+    });
+  });
+});

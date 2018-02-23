@@ -5,6 +5,10 @@ const Jwt = require('hapi-auth-jwt2');
 
 const validate = require('./validate');
 
+const Inert = require('inert');
+const Vision = require('vision');
+const HapiSwagger = require('hapi-swagger');
+
 const server = new Hapi.Server();
 
 server.connection({
@@ -12,7 +16,25 @@ server.connection({
   host: 'localhost',
 });
 
-server.register(Jwt);
+const options = {
+  info: {
+    title: 'Wallet Documentation',
+    version: '1.0',
+  },
+};
+
+server.register([
+  Jwt,
+  Inert,
+  Vision,
+  {
+    register: HapiSwagger,
+    options,
+  }], (err) => {
+  if (err) {
+    throw err;
+  }
+});
 
 server.auth.strategy('jwt', 'jwt', {
   key: secret,

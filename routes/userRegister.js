@@ -1,23 +1,22 @@
 const Model = require('../models');
 const hashPassword = require('../utils/hashPassword');
 const Boom = require('boom');
-const Joi = require('joi');
 
+const registerPayloadValidation = require('../validations/routes/userRegister');
+const registerSwagger = require('../swagger/routes/userRegister');
 
 const route = [{
   method: 'POST',
   path: '/users',
   config: {
+    tags: ['api'],
+    description: 'register new user',
+    notes: 'register new user',
+    plugins: {
+      'hapi-swagger': registerSwagger,
+    },
     validate: {
-      payload: Joi.object({
-        firstName: Joi.string().min(3).max(15).regex(/^[a-z]+$/i),
-        lastName: Joi.string().min(3).max(15).regex(/^[a-z]*$/i),
-        aadharNo: Joi.number().positive().integer(),
-        phone: Joi.string().min(10).max(10).regex(/^[0-9]*$/i),
-        accountNo: Joi.string().min(10).max(20).regex(/^[0-9]*$/i),
-        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i),
-        password: Joi.string().min(4).max(20),
-      }),
+      payload: registerPayloadValidation,
     },
     auth: false,
   },

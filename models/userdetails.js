@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     accountNo: DataTypes.STRING,
     balance: DataTypes.FLOAT,
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
   }, {
     classMethods: {
       associate(models) {

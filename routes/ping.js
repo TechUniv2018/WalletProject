@@ -1,7 +1,10 @@
 module.exports = {
   method: 'GET',
   path: '/ping',
-  handler: (request, response) => {
-    response('pong');
+  config: {
+    auth: false,
+    handler: (request, response) => {
+      response('pong');
+    },
   },
 };

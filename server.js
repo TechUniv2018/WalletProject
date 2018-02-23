@@ -1,7 +1,8 @@
 const Hapi = require('hapi');
-// const secret = require('./secret');
+const secret = require('./secret');
 const Routes = require('./routes');
-// const Jwt = require('hapi-auth-jwt2');
+
+const Jwt = require('hapi-auth-jwt2');
 
 const validate = require('./validate');
 
@@ -24,7 +25,7 @@ const options = {
 };
 
 server.register([
-  // Jwt,
+  Jwt,
   Inert,
   Vision,
   {
@@ -36,15 +37,15 @@ server.register([
   }
 });
 
-// server.auth.strategy('jwt', 'jwt', {
-//   key: secret,
-//   validateFunc: validate,
-//   verifyOptions: {
-//     algorithms: ['HS256'],
-//   },
-// });
+server.auth.strategy('jwt', 'jwt', {
+  key: secret,
+  validateFunc: validate,
+  verifyOptions: {
+    algorithms: ['HS256'],
+  },
+});
 
-// server.auth.default('jwt');
+server.auth.default('jwt');
 
 server.route(Routes);
 

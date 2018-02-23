@@ -2,6 +2,9 @@
 
 const sendMessage = require('./handler/sendOTP');
 const Models = require('../models');
+const forgetPasswordSwagger = require('../swagger/routes/forgetpassword');
+const verifyOTPSwagger = require('../swagger/routes/verifyOTP');
+const Joi = require('joi');
 
 const getUserData = userName => new Promise((resolve) => {
   // const userInfo = {};()
@@ -76,11 +79,24 @@ const verifyOTP = (userInfo, otpEntry, rcvdOTP) => new Promise((resolve) => {
 module.exports = [{
   method: 'POST',
   path: '/forgetPassword',
+  config: {
+    auth: 'jwt',
+    tags: ['api'],
+    description: 'Registers a request for password reset',
+    notes: 'Sends OTP for password reset for valid userName',
+    plugins: {
+      'hapi-swagger': forgetPasswordSwagger,
+    },
+    validate: {
+      payload: Joi.object({
+        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i),
+        userId: Joi.number().integer(),
+      }),
+    },
+  },
   handler: (req, reply) => { // sends OTP to user
     const { userName } = req.auth.credentials;
-    // console.log(userName);
     getUserData(userName).then((userInfo) => {
-      // console.log('userInfo: ', userInfo);
       sendOTP(userInfo.phone).then((otp) => {
         otpDB(userInfo.userId, otp).then(() => {
           reply('OTP sent on registered mobile');
@@ -92,6 +108,20 @@ module.exports = [{
 {
   method: 'POST',
   path: '/verifyOTP',
+  config: {
+    auth: 'jwt',
+    tags: ['api'],
+    description: 'Verifies OTP and resets password for valid OTP',
+    plugins: {
+      'hapi-swagger': verifyOTPSwagger,
+    },
+    validate: {
+      payload: Joi.object({
+        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i),
+        otp: Joi.number().integer().min(6).max(6),
+      }),
+    },
+  },
   handler: (req, reply) => {
     const rcvdOTP = req.payload.otp;
     const userInfo = req.auth.credentials;

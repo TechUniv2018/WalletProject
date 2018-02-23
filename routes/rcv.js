@@ -1,17 +1,17 @@
 const rcvHandler = require('./Handler/rcvHandler');
 const Joi = require('joi');
-// const receiveSwagger = require('../swagger/routes/receive');
+const receiveSwagger = require('../swagger/routes/receive');
 
 module.exports = [{
   method: 'POST',
   path: '/transaction/receive',
   config: {
     // auth: 'jwt',
-    // tags: ['api'],
-    // description: 'Handles approving a money request',
-    // plugins: {
-    //   'hapi-swagger': receiveSwagger,
-    // },
+    tags: ['api'],
+    description: 'Handles approving a money request',
+    plugins: {
+      'hapi-swagger': receiveSwagger,
+    },
     validate: {
       // auth: 'jwt',
       payload: Joi.object({

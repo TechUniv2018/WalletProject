@@ -1,9 +1,13 @@
 const Hapi = require('hapi');
-const secret = require('./secret');
+// const secret = require('./secret');
 const Routes = require('./routes');
-const Jwt = require('hapi-auth-jwt2');
+// const Jwt = require('hapi-auth-jwt2');
 
 const validate = require('./validate');
+
+const Inert = require('inert');
+const Vision = require('vision');
+const HapiSwagger = require('hapi-swagger');
 
 const server = new Hapi.Server();
 
@@ -12,7 +16,25 @@ server.connection({
   host: 'localhost',
 });
 
-// server.register(Jwt);
+const options = {
+  info: {
+    title: 'Wallet Documentation',
+    version: '1.0',
+  },
+};
+
+server.register([
+  // Jwt,
+  Inert,
+  Vision,
+  {
+    register: HapiSwagger,
+    options,
+  }], (err) => {
+  if (err) {
+    throw err;
+  }
+});
 
 // server.auth.strategy('jwt', 'jwt', {
 //   key: secret,
@@ -28,8 +50,8 @@ server.route(Routes);
 
 if (!module.parent) {
   server.start((err) => {
-    if (err) { console.log(err); }
-    console.log('Server listening on: ');
+    if (err) throw (err);
+    console.log('Server running at:', server.info.uri);
   });
 }
 

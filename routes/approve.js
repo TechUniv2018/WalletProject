@@ -1,17 +1,17 @@
 const approveHandler = require('./Handler/approveHandler');
 const Joi = require('joi');
-// const approveSwagger = require('../swagger/routes/approve');
+const approveSwagger = require('../swagger/routes/approve');
 
 module.exports = [{
   method: 'POST',
   path: '/transaction/approve',
   config: {
     // auth: 'jwt',
-    // tags: ['api'],
-    // description: 'Handles approving a money request',
-    // plugins: {
-    //   'hapi-swagger': approveSwagger,
-    // },
+    tags: ['api'],
+    description: 'Handles approving a money request',
+    plugins: {
+      'hapi-swagger': approveSwagger,
+    },
     validate: {
       // auth: 'jwt',
       payload: Joi.object({

@@ -55,9 +55,9 @@ const sendOTP = (phone) => {
   return otp;
 };
 
-const verifyOTP = (userInfo, otpEntry, rcvdOTP) => new Promise((resolve) => {
+const verifyOTP = (userInfo, otpEntry, rcvdOTP, newPassword) => new Promise((resolve) => {
   if (otpEntry.otp === parseInt(rcvdOTP) && !timedout(otpEntry.timestamp)) {
-    const newPassword = Math.random().toString(36).slice(-8);
+    // const newPassword = Math.random().toString(36).slice(-8);
     const userInfoNew = {
       userId: userInfo.userId,
       userName: userInfo.userName,
@@ -68,7 +68,7 @@ const verifyOTP = (userInfo, otpEntry, rcvdOTP) => new Promise((resolve) => {
         { password: hashedPassword },
         { where: { userId: userInfoNew.userId } },
       ).then(() => {
-        resolve('Password successfully reset', newPassword);
+        resolve('Password successfully reset');
       })
         .catch((err) => {
           console.log(err);
@@ -129,22 +129,22 @@ module.exports = [{
         authorization: Joi.string(),
       }).unknown(),
       payload: Joi.object({
-        userName: Joi.string().min(5).max(15).regex(/^[a-z][a-z0-9_]*$/i)
-          .example('John_Doe'),
         otp: Joi.number().integer().min(100000).max(999999),
+        newPassword: Joi.string().min(4).max(20).example('newPassword'),
       }),
     },
   },
   handler: (req, reply) => {
     const rcvdOTP = req.payload.otp;
     const userInfo = req.auth.credentials;
+    const newPassword = req.payload.newPassword;
     Models.forgotpasswords.findAll({ // Get latest otp info
       where: { userId: userInfo.userId },
       limit: 1,
       order: [['createdAt', 'DESC']],
     }).then((entry) => {
       const otpEntry = entry[0].dataValues;
-      verifyOTP(userInfo, otpEntry, rcvdOTP)
+      verifyOTP(userInfo, otpEntry, rcvdOTP, newPassword)
         .then((response) => {
           reply(response);
         });

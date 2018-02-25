@@ -18,29 +18,27 @@ module.exports = [{
         authorization: Joi.string(),
       }).unknown(),
       payload: Joi.object({
-        from: Joi.number().integer().min(0).required()
-          .example(2),
-        amount: Joi.number().integer().min(0).required()
-          .example(100),
+        transactionId: Joi.number().integer().min(10000).max(99999)
+          .required()
+          .example(11212),
         decision: Joi.string().min(2).max(3).required()
           .example('YES'),
       }),
     },
   },
   handler: (req, reply) => {
-    const fromId = req.payload.from;
-    const amt = req.payload.amount;
+    const txnId = req.payload.transactionId;
     const goAhead = req.payload.decision;
     // const currentUserId = 1;
     const currentUserId = req.auth.credentials.userId;
     if (goAhead === 'NO') {
-      rcvHandler(fromId, currentUserId, amt, 0).then(() => {
-        // send notification back at fromId
+      rcvHandler(txnId, currentUserId, 0).then(() => {
+        // send notification back at user
         reply('Transaction cancelled');
       });
     } else {
-      rcvHandler(fromId, currentUserId, amt, 1).then(() => {
-        // send notification back at fromId
+      rcvHandler(txnId, currentUserId, 1).then(() => {
+        // send notification back at user
         reply('Amount transferred');
       })
         .catch((err) => {

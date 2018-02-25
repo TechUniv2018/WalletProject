@@ -1,13 +1,13 @@
 const Models = require('../../models');
 
-const decreaseBalance = (fromId, amt) => new Promise((resolve, reject) => {
-  Models.userDetails.findOne({ where: { userId: fromId } })
+const decreaseBalance = (Id, amt) => new Promise((resolve, reject) => {
+  Models.userDetails.findOne({ where: { userId: Id } })
     .then((userObject) => {
       const newBalance = userObject.balance - amt;
       if (newBalance >= 0) {
         Models.userDetails.update(
           { balance: newBalance },
-          { where: { userId: fromId } },
+          { where: { userId: Id } },
         )
           .then(() => {
             resolve();
@@ -18,13 +18,13 @@ const decreaseBalance = (fromId, amt) => new Promise((resolve, reject) => {
     });
 });
 
-const increaseBalance = (currentUserId, amt) => new Promise((resolve) => {
-  Models.userDetails.findOne({ where: { userId: currentUserId } })
+const increaseBalance = (Id, amt) => new Promise((resolve) => {
+  Models.userDetails.findOne({ where: { userId: Id } })
     .then((userObject) => {
       const newBalance = amt + userObject.balance;
       Models.userDetails.update(
         { balance: newBalance },
-        { where: { userId: currentUserId } },
+        { where: { userId: Id } },
       )
         .then(() => {
           resolve();
@@ -32,34 +32,38 @@ const increaseBalance = (currentUserId, amt) => new Promise((resolve) => {
     });
 });
 
-const transferMoney = (fromId, currentUserId, amt) => new Promise((resolve, reject) => {
-  decreaseBalance(fromId, amt).then(() => {
-    increaseBalance(currentUserId, amt).then(() => {
-      Models.transactions.update({
-        status: 'COMPLETED',
-      }, {
-        where: {
-          fromId,
-          toId: currentUserId,
-        },
-      }).then(() => {
-        resolve();
+const transferMoney = transactionId => new Promise((resolve, reject) => {
+  Models.transactions.findOne({ where: { transactionId } })
+    .then((transactionDetails) => {
+      const { fromId } = transactionDetails;
+      const { amount } = transactionDetails;
+      const { toId } = transactionDetails;
+      decreaseBalance(fromId, amount).then(() => {
+        increaseBalance(toId, amount).then(() => {
+          Models.transactions.update({
+            status: 'COMPLETED',
+          }, {
+            where: {
+              transactionId,
+            },
+          }).then(() => {
+            resolve();
+          });
+        });
+      }).catch((err) => {
+        reject(new Error(err).message);
       });
     });
-  }).catch((err) => {
-    reject(new Error(err).message);
-  });
 });
 
 
-const cancelTransaction = (fromId, currentUserId) => new Promise((resolve) => {
+const cancelTransaction = transactionId => new Promise((resolve) => {
   // update transaction status in transaction history
   Models.transactions.update({
     status: 'FAILED',
   }, {
     where: {
-      fromId,
-      toId: currentUserId,
+      transactionId,
       status: 'PENDING',
     },
   })
@@ -69,28 +73,27 @@ const cancelTransaction = (fromId, currentUserId) => new Promise((resolve) => {
 });
 
 
-const handlerFn = (fromId, currentUserId, amt, decision) => new Promise((resolve, reject) => {
-  if (decision) {
-    transferMoney(fromId, currentUserId, amt).then(() => {
-      resolve();
-    }).catch((err) => {
-      Models.transactions.update({
-        status: 'FAILED',
-      }, {
-        where: {
-          fromId,
-          toId: currentUserId,
-          status: 'PENDING',
-        },
-      }).then(() => {
-        reject(new Error(err.message));
+const handlerFn = (transactionId, currentUserId, decision) =>
+  new Promise((resolve, reject) => {
+    if (decision) {
+      transferMoney(transactionId).then(() => {
+        resolve();
+      }).catch((err) => {
+        Models.transactions.update({
+          status: 'FAILED',
+        }, {
+          where: {
+            transactionId,
+          },
+        }).then(() => {
+          reject(new Error(err.message));
+        });
       });
-    });
-  } else {
-    cancelTransaction(fromId, currentUserId).then(() => {
-      resolve();
-    });
-  }
-});
+    } else {
+      cancelTransaction(transactionId).then(() => {
+        resolve();
+      });
+    }
+  });
 
 module.exports = handlerFn;

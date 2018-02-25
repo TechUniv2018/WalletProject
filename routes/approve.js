@@ -18,25 +18,25 @@ module.exports = [{
         authorization: Joi.string(),
       }).unknown(),
       payload: Joi.object({
-        from: Joi.number().integer().min(0).required(),
-        amount: Joi.number().integer().min(0).required(),
-        decision: Joi.string().min(2).max(3).required(),
+        transactionId: Joi.number().integer().min(10000).max(99999)
+          .required()
+          .example(11212),
+        decision: Joi.string().min(2).max(3).required()
+          .example('NO'),
       }),
 
     },
   },
   handler: (req, reply) => {
-    const fromId = req.payload.from;
-    const amt = req.payload.amount;
+    const { transactionId } = req.payload;
     const goAhead = req.payload.decision;
-    // const currentUserId = 1;
     const currentUserId = req.auth.credentials.userId;
     if (goAhead === 'NO') {
-      approveHandler(fromId, currentUserId, amt, 0).then(() => {
+      approveHandler(transactionId, currentUserId, 0).then(() => {
         reply('Transaction cancelled');
       });
     } else {
-      approveHandler(fromId, currentUserId, amt, 1).then((resolve) => {
+      approveHandler(transactionId, currentUserId, 1).then(() => {
         reply('Amount transferred');
       }).catch(() => {
         reply('insufficient balance');

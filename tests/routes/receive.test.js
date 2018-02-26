@@ -5,15 +5,14 @@ describe('url validation', () => {
   test('Responds with 200 status code when provided credentials', (done) => {
     const request = {
       method: 'POST',
-      url: '/transaction/receive',
+      url: '/transaction/approve',
       credentials: {
         userId: 3,
         userName: 'Bob_B',
       },
       payload: {
-        from: 2,
-        amount: 100,
-        decision: 'YES',
+        transactionId: 23456,
+        decision: 'NO',
       },
     };
     server.inject(request, (response) => {
@@ -28,9 +27,8 @@ describe('url validation', () => {
       method: 'POST',
       url: '/transaction/receive',
       payload: {
-        from: 2,
-        amount: 100,
-        decision: 'YES',
+        transactionId: 23456,
+        decision: 'NO',
       },
     };
     server.inject(request, (response) => {
@@ -41,7 +39,7 @@ describe('url validation', () => {
 });
 
 describe('request validation', () => {
-  test('rejects request if fromId is not provided', (done) => {
+  test('rejects request if transactionId is not provided', (done) => {
     const request = {
       method: 'POST',
       url: '/transaction/receive',
@@ -50,27 +48,7 @@ describe('request validation', () => {
         userName: 'John_Doe',
       },
       payload: {
-        amount: 100,
-        decision: 'YES',
-      },
-    };
-    server.inject(request, (response) => {
-      expect(response.statusCode).toBe(400);
-      done();
-    });
-  });
-
-  test('rejects request if amount is not provided', (done) => {
-    const request = {
-      method: 'POST',
-      url: '/transaction/receive',
-      credentials: {
-        userId: 1,
-        userName: 'John_Doe',
-      },
-      payload: {
-        from: 2,
-        decision: 'YES',
+        decision: 'NO',
       },
     };
     server.inject(request, (response) => {
@@ -88,8 +66,7 @@ describe('request validation', () => {
         userName: 'John_Doe',
       },
       payload: {
-        from: 2,
-        amount: 100,
+        transactionId: 23456,
       },
     };
     server.inject(request, (response) => {
@@ -109,13 +86,12 @@ describe('functionality tests', () => {
         userName: 'John_Doe',
       },
       payload: {
-        from: 3,
-        amount: 100,
+        transactionId: 11111,
         decision: 'YES',
       },
     };
     server.inject(request, () => {
-      Models.transactions.findOne({ where: { fromId: 3, toId: 1 } })
+      Models.transactions.findOne({ where: { transactionId: request.payload.transactionId } })
         .then((row) => {
           expect(row.status).toEqual('COMPLETED');
           done();
@@ -132,13 +108,12 @@ describe('functionality tests', () => {
         userName: 'John_Doe',
       },
       payload: {
-        from: 2,
-        amount: 100,
+        transactionId: 11212,
         decision: 'NO',
       },
     };
     server.inject(request, () => {
-      Models.transactions.findOne({ where: { fromId: 2, toId: 1, amount: 100 } })
+      Models.transactions.findOne({ where: { transactionId: request.payload.transactionId } })
         .then((row) => {
           console.log(row);
           expect(row.status).toEqual('FAILED');

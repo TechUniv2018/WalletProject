@@ -7,9 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate && NODE_ENV=test sequelize db:seed:all && NODE_ENV=test jest --forceExit --coverage",
-    "coverage": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate && NODE_ENV=test sequelize db:seed:all && NODE_ENV=test jest --coverage",
-    "start": "sequelize db:migrate && node server.js",
+    "test": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate && NODE_ENV=test sequelize db:seed:all && NODE_ENV=test jest --forceExit",
+    "coverage": "NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate && NODE_ENV=test sequelize db:seed:all && NODE_ENV=test jest --coverage --forceExit",
+    "start": "sequelize db:migrate && nodemon ./server.js",
     "sequelize": "sequelize"
   },
   "repository": {
@@ -30,6 +30,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1",
     "jest": "^22.1.4",
+    "nodemon": "^1.15.1",
     "sequelize-cli": "^3.2.0"
   },
   "dependencies": {
@@ -38,14 +39,14 @@
     "hapi": "^16.6.2",
     "hapi-auth-basic": "^4.2.0",
     "hapi-auth-jwt2": "^4.0.0",
-    "hapi-swagger": "7",
-    "inert": "4",
+    "hapi-swagger": "^7.10.0",
+    "inert": "^4.2.1",
     "joi": "^13.1.2",
     "jsonwebtoken": "^8.1.1",
     "jwt-decode": "^2.2.0",
     "pg": "^6.4.2",
     "sequelize": "^4.32.6",
     "twilio": "^3.11.3",
-    "vision": "4"
+    "vision": "^4.1.1"
   }
 }

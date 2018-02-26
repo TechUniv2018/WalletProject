@@ -1,6 +1,6 @@
 const server = require('../../server');
 const bcrypt = require('bcryptjs');
-const { hashPassword } = require('../../routes/userRegister');
+const hashPassword = require('../../utils/hashPassword');
 
 describe('request validation', () => {
   describe('Test for unsuccessful POST request because ', () => {

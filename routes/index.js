@@ -1,6 +1,8 @@
 const ping = require('./ping');
 const forgetPassword = require('./forgetPassword');
-const { route: userRegistration } = require('./userRegister');
+const userRegistration = require('./userRegister');
 const userLogin = require('./userLogin');
+const auth = require('./auth');
+const history = require('./history');
 
-module.exports = [].concat(ping, forgetPassword, userRegistration, userLogin);
+module.exports = [].concat(ping, forgetPassword, userRegistration, userLogin, auth, history);

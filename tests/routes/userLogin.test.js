@@ -1,4 +1,6 @@
 const server = require('../../server');
+const Jwt = require('jsonwebtoken');
+const secret = require('../../secret');
 
 describe('request validation', () => {
   test('Test for unsuccessful POST request because username length must be atleat 5 char', (done) => {
@@ -88,5 +90,88 @@ describe('User authentication', () => {
       expect(response.statusCode).toBe(200);
       done();
     });
+  });
+});
+
+describe('JWT validation', () => {
+  test('request to GET /ping should not require session token', (done) => {
+    const options = {
+      method: 'GET',
+      url: '/ping',
+    };
+
+    server.inject(options, (response) => {
+      expect(response.statusCode).toBe(200);
+      done();
+    });
+  });
+
+  test('Attempt to access restricted content (without auth token)', (done) => {
+    const options = {
+      method: 'GET',
+      url: '/auth',
+    };
+
+    server.inject(options, (response) => {
+      expect(response.statusCode).toBe(401);
+      done();
+    });
+  });
+
+
+  test('Attempt to access restricted content (with an INVALID Token)', (done) => {
+    const options = {
+      method: 'GET',
+      url: '/auth',
+      headers: { authorization: 'Bearer fails.validation' },
+    };
+
+    server.inject(options, (response) => {
+      expect(response.statusCode).toBe(401);
+      done();
+    });
+  });
+
+  test('Try using an incorrect secret to sign the JWT', (done) => {
+    const token = Jwt.sign({ userId: 1, name: 'John_Doe' }, 'incorrectSecret');
+    const options = {
+      method: 'GET',
+      url: '/auth',
+      headers: { authorization: token },
+    };
+    server.inject(options, (response) => {
+      expect(response.statusCode).toBe(401);
+      done();
+    });
+  });
+
+
+  test('Simulate Authentication', (done) => {
+    const token = Jwt.sign({ userId: 1, name: 'John_Doe' }, secret);
+    const options = {
+      method: 'GET',
+      url: '/auth',
+      headers: { authorization: token },
+    };
+    server.inject(options, (res) => {
+      expect(res.statusCode).toBe(200);
+      done();
+    });
+  });
+
+
+  test('Try using an expired token', (done) => {
+    const token = Jwt.sign({ userId: 1, name: 'John_Doe' }, secret, { expiresIn: '1s' });
+    const options = {
+      method: 'GET',
+      url: '/auth',
+      headers: { authorization: token },
+    };
+    setTimeout(() => {
+      server.inject(options, (res) => {
+        expect(res.statusCode).toBe(401);
+        done();
+      });
+    }, 1100);
   });
 });

@@ -68,7 +68,7 @@ const verifyOTP = (userInfo, otpEntry, rcvdOTP) => new Promise((resolve) => {
         { password: hashedPassword },
         { where: { userId: userInfoNew.userId } },
       ).then(() => {
-        resolve('Password successfully reset with ', newPassword);
+        resolve('Password successfully reset', newPassword);
       })
         .catch((err) => {
           console.log(err);

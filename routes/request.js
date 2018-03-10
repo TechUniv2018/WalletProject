@@ -1,6 +1,8 @@
 const Models = require('../models');
 const Joi = require('joi');
 
+const historyHeaderValidation = require('../validations/routes/history');
+
 const requestSwagger = {
   responses: {
     200: {
@@ -29,6 +31,7 @@ const route = [
         'hapi-swagger': requestSwagger,
       },
       validate: {
+        headers: historyHeaderValidation,
         payload: requestPayloadValidation,
       },
       auth: 'jwt',

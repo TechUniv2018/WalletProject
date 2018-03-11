@@ -12,6 +12,7 @@ const history = require('./history');
 const category = require('./category');
 const contacts = require('./contacts');
 const details = require('./details');
+const users = require('./users');
 
 module.exports = [].concat(
   ping,
@@ -26,4 +27,5 @@ module.exports = [].concat(
   forgetPassword,
   details,
   approve,
+  users,
 );

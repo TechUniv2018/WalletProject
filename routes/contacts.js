@@ -30,6 +30,19 @@ const contactAddSwagger = {
   },
 };
 
+const contactDeleteSwagger = {
+  responses: {
+    200: {
+      description: 'Success',
+      schema: Joi.object({
+        message: Joi.string().example('successfully removed'),
+      }).label('Result'),
+    },
+    400: { description: 'Bad Request' },
+    401: { description: 'Unauthorized' },
+  },
+};
+
 const contactAddValidation = Joi.object({
   friendId: Joi.number().example(2),
 });
@@ -94,6 +107,30 @@ module.exports = [{
         reply({ message: 'User doesn\'t exist' }).code(400);
       } else {
         model.contacts.findOrCreate({ where: { userId, friendId }, defaults: { userId, friendId } }).then(() => reply({ message: 'Successfully added' }).code(200));
+      }
+    });
+  },
+}, {
+  method: 'DELETE',
+  path: '/contacts',
+  config: {
+    tags: ['api'],
+    description: 'delete existing contact for the current user',
+    notes: 'deletes from database the id of the contact',
+    plugins: {
+      'hapi-swagger': contactDeleteSwagger,
+    },
+    validate: { headers: headerValidation, payload: contactAddValidation },
+  },
+  handler: (request, reply) => {
+    const { friendId } = request.payload;
+    const { userId } = request.auth.credentials;
+
+    model.contacts.destroy({ where: { userId: friendId } }).then((result) => {
+      if (result === 0) {
+        reply({ message: 'User doesn\'t exist' }).code(400);
+      } else {
+        reply({ message: 'Successfully removed' }).code(200);
       }
     });
   },

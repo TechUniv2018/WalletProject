@@ -44,7 +44,7 @@ describe('check for verifying OTP', () => {
         userName: 'John_Doe',
       },
       payload: JSON.stringify({
-        userName: 'John_Doe',
+        newPassword: 'newPassword',
         otp: 123456,
       }),
     };
@@ -63,7 +63,7 @@ describe('check for verifying OTP', () => {
         userName: 'John_Doe',
       },
       payload: JSON.stringify({
-        userName: 'John_Doe',
+        newPassword: 'newPassword',
         otp: 123456,
       }),
     };

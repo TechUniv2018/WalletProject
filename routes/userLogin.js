@@ -12,7 +12,7 @@ function createToken(user) {
   return Jwt.sign({
     userId: user.userId,
     userName: user.userName,
-  }, secret, {
+  }, secret.auth, {
     algorithm: 'HS256',
     expiresIn: '1h',
   });

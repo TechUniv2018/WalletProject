@@ -27,7 +27,9 @@ const route = [{
     } = request.payload;
 
     Model.users.findOne({
-      userName: request.payload.userName,
+      where: {
+        userName: request.payload.userName,
+      },
     })
       .then((user) => {
         if (user && user.userName === request.payload.userName) {

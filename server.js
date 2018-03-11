@@ -37,7 +37,7 @@ server.register([
 });
 
 server.auth.strategy('jwt', 'jwt', {
-  key: secret,
+  key: secret.auth,
   validateFunc: validate,
   verifyOptions: {
     algorithms: ['HS256'],

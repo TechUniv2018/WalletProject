@@ -1,5 +1,6 @@
 const Models = require('../models');
 const Joi = require('joi');
+const pusher = require('../utils/pusher');
 
 const historyHeaderValidation = require('../validations/routes/history');
 
@@ -60,6 +61,12 @@ const route = [
             { where: { userId: currentUserId } },
           ).then(() => {
             // create transaction
+            pusher.trigger(
+              'money-channel', 'send-money',
+              {
+                from: currentUserId, to: toId, amount: amt, reason,
+              },
+            );
             console.log('yup coming in transaction database');
             Models.transactions.create({
               transactionId: `${currentUserId}_${toId}_${new Date()}`,

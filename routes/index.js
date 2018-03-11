@@ -8,8 +8,9 @@ const forgetPassword = require('./forgetPassword');
 const userLogin = require('./userLogin');
 const auth = require('./auth');
 const history = require('./history');
-const catagory = require('./catagory');
+const category = require('./category');
 const contacts = require('./contacts');
+const details = require('./details');
 
 module.exports = [].concat(
   ping,
@@ -17,9 +18,10 @@ module.exports = [].concat(
   userLogin,
   auth,
   history,
-  catagory,
+  category,
   contacts,
   send,
   request,
   forgetPassword,
+  details,
 );

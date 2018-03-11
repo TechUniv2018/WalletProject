@@ -1,5 +1,6 @@
 const Models = require('../models');
 const Joi = require('joi');
+const pusher = require('../utils/pusher');
 
 const historyHeaderValidation = require('../validations/routes/history');
 
@@ -37,11 +38,16 @@ const route = [
       auth: 'jwt',
     },
     handler: (request, response) => {
-      const toId = request.payload.toId;
       const amt = request.payload.amount;
       const currentUserId = request.auth.credentials.userId;
-      const reason = request.payload.reason;
+      const { reason, toId } = request.payload;
       // create transaction
+      pusher.trigger(
+        'money-channel', 'request-money',
+        {
+          to: currentUserId, from: toId, amount: amt, reason,
+        },
+      );
       Models.transactions.create({
         transactionId: `${currentUserId}_${toId}_${new Date()}`,
         fromId: currentUserId,

@@ -6,7 +6,7 @@ const historyHeaderValidation = require('../validations/routes/history');
 const Joi = require('joi');
 
 
-const setCatagory = (uId, tId, category) => models.transactions.findOne({
+const setCategory = (uId, tId, category) => models.transactions.findOne({
   where: {
     fromId: uId,
     transactionId: tId,
@@ -24,7 +24,7 @@ const setCatagory = (uId, tId, category) => models.transactions.findOne({
 
 module.exports = {
   method: 'PATCH',
-  path: '/transactions/catagory',
+  path: '/transactions/category',
   config: {
     auth: 'jwt',
     tags: ['api'],
@@ -37,7 +37,7 @@ module.exports = {
             description: 'Success',
             schema: Joi.object({
               history: Joi.array().items(Joi.object({
-                message: Joi.string().example('catagory set'),
+                message: Joi.string().example('category set'),
               })),
             }).label('Result'),
           },
@@ -58,11 +58,11 @@ module.exports = {
   },
   handler: (request, response) => {
     const { transactionId, category } = request.payload;
-    setCatagory(request.auth.credentials.userId, transactionId, category).then((result) => {
+    setCategory(request.auth.credentials.userId, transactionId, category).then((result) => {
       if (result) {
         response({
           statusCode: 200,
-          message: 'catagory set',
+          message: 'category set',
         });
       } else {
         response({

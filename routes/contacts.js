@@ -75,7 +75,7 @@ module.exports = [{
   config: {
     tags: ['api'],
     description: 'add a contact for the current user',
-    notes: 'inerst into database the id of the contact',
+    notes: 'insert into database the id of the contact',
     plugins: {
       'hapi-swagger': contactAddSwagger,
     },

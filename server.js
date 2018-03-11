@@ -36,7 +36,7 @@ server.register([
 });
 
 server.auth.strategy('jwt', 'jwt', {
-  key: secret,
+  key: secret.auth,
   validateFunc: validate,
   verifyOptions: {
     algorithms: ['HS256'],
@@ -53,5 +53,6 @@ if (!module.parent) {
     console.log('Server running at:', server.info.uri);
   });
 }
+
 
 module.exports = server;

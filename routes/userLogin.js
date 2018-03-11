@@ -12,7 +12,7 @@ function createToken(user) {
   return Jwt.sign({
     userId: user.userId,
     userName: user.userName,
-  }, secret, {
+  }, secret.auth, {
     algorithm: 'HS256',
     expiresIn: '1h',
   });
@@ -46,8 +46,10 @@ const route = [{
       },
     })
       .then((user) => {
+        console.log(user);
         const isCorrect = bcrypt.compareSync(password, user.password);
         if (isCorrect) {
+          console.log(isCorrect);
           reply({
             message: 'Logged In',
             data: {

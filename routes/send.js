@@ -55,33 +55,37 @@ const route = [
           response('insufficient balance');
         } else {
           const futureBalance = balance - amt;
+          pusher.trigger(
+            'money-channel', 'send-money',
+            {
+              from: currentUserId, to: toId, amount: amt, reason,
+            },
+          );
           // deduct balance from fromId
           Models.userDetails.update(
             { balance: futureBalance },
             { where: { userId: currentUserId } },
-          ).then(() => {
-            // create transaction
-            pusher.trigger(
-              'money-channel', 'send-money',
-              {
-                from: currentUserId, to: toId, amount: amt, reason,
-              },
-            );
-            console.log('yup coming in transaction database');
-            Models.transactions.create({
-              transactionId: `${currentUserId}_${toId}_${new Date()}`,
-              fromId: currentUserId,
-              toId,
-              amount: amt,
-              reason,
-              status: 'PENDING',
-              timeStamp: new Date(),
-              createdAt: new Date(),
-              updatedAt: new Date(),
+          ).then(() => Models.transactions.create({
+            transactionId: `${currentUserId}_${toId}_${new Date()}`,
+            fromId: currentUserId,
+            toId,
+            amount: amt,
+            reason,
+            status: 'completed',
+            timeStamp: new Date(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })).then(() => getUserBalance(toId))
+            .then((toBalance) => {
+              const futureToBalance = toBalance + amt;
+              Models.userDetails.update(
+                { balance: futureToBalance },
+                { where: { userId: toId } },
+              );
+            })
+            .then(() => {
+              response({ statusCode: 201, message: 'transaction added' });
             });
-          }).then(() => {
-            response({ statusCode: 201, message: 'transaction added' });
-          });
         }
       });
     },

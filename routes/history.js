@@ -21,8 +21,8 @@ const getHistory = id => models.transactions.findAll({
 
   return Promise.all(resultArrPromise).then((resultArr) => {
     for (let transactionNo = 0; transactionNo < result.length; transactionNo += 1) {
-      detailsArr[transactionNo].fromName = resultArr[transactionNo * 2].userName;
-      detailsArr[transactionNo].toName = resultArr[(transactionNo * 2) + 1].userName;
+      detailsArr[transactionNo].fromUser = resultArr[transactionNo * 2].userName;
+      detailsArr[transactionNo].toUser = resultArr[(transactionNo * 2) + 1].userName;
     }
 
     return detailsArr;

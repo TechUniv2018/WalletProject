@@ -42,11 +42,13 @@ describe('check server response message', () => {
 
     }, (response) => {
       const { history } = JSON.parse(response.payload);
-      expect.assertions(history.length * 9);
+      expect.assertions(history.length * 11);
       history.forEach((transaction) => {
         expect(transaction.transactionId).toBeDefined();
         expect(transaction.fromId).toBeDefined();
         expect(transaction.toId).toBeDefined();
+        expect(transaction.fromName).toBeDefined();
+        expect(transaction.toName).toBeDefined();
         expect(transaction.amount).toBeDefined();
         expect(transaction.reason).toBeDefined();
         expect(transaction.status).toBeDefined();

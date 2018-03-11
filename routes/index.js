@@ -6,6 +6,8 @@ const request = require('./request');
 const userRegistration = require('./userRegister');
 const forgetPassword = require('./forgetPassword');
 const userLogin = require('./userLogin');
+const rcvMoney = require('./rcv');
+const approve = require('./approve');
 const auth = require('./auth');
 const history = require('./history');
 const catagory = require('./catagory');
@@ -22,4 +24,6 @@ module.exports = [].concat(
   send,
   request,
   forgetPassword,
+  rcvMoney,
+  approve,
 );

@@ -5,6 +5,7 @@ module.exports = {
     accountNo: '0987654321',
     firstName: 'Alice',
     lastName: 'A',
+    balance: 100,
     createdAt: new Date(),
     updatedAt: new Date(),
   }, {
@@ -13,6 +14,7 @@ module.exports = {
     accountNo: '0987654321',
     firstName: 'Bob',
     lastName: 'B',
+    balance: 100,
     createdAt: new Date(),
     updatedAt: new Date(),
   }], {}),

@@ -3,7 +3,7 @@ const Joi = require('joi');
 const approveSwagger = require('../swagger/routes/approve');
 
 module.exports = [{
-  method: 'POST',
+  method: 'PATCH',
   path: '/transaction/approve',
   config: {
     auth: 'jwt',

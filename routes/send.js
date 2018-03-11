@@ -58,23 +58,27 @@ const route = [
           Models.userDetails.update(
             { balance: futureBalance },
             { where: { userId: currentUserId } },
-          ).then(() => {
-            // create transaction
-            console.log('yup coming in transaction database');
-            Models.transactions.create({
-              transactionId: `${currentUserId}_${toId}_${new Date()}`,
-              fromId: currentUserId,
-              toId,
-              amount: amt,
-              reason,
-              status: 'PENDING',
-              timeStamp: new Date(),
-              createdAt: new Date(),
-              updatedAt: new Date(),
+          ).then(() => Models.transactions.create({
+            transactionId: `${currentUserId}_${toId}_${new Date()}`,
+            fromId: currentUserId,
+            toId,
+            amount: amt,
+            reason,
+            status: 'completed',
+            timeStamp: new Date(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })).then(() => getUserBalance(toId))
+            .then((toBalance) => {
+              const futureToBalance = toBalance + amt;
+              Models.userDetails.update(
+                { balance: futureToBalance },
+                { where: { userId: toId } },
+              );
+            })
+            .then(() => {
+              response({ statusCode: 201, message: 'transaction added' });
             });
-          }).then(() => {
-            response({ statusCode: 201, message: 'transaction added' });
-          });
         }
       });
     },

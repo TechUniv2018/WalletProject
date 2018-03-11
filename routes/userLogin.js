@@ -46,10 +46,8 @@ const route = [{
       },
     })
       .then((user) => {
-        console.log(user);
         const isCorrect = bcrypt.compareSync(password, user.password);
         if (isCorrect) {
-          console.log(isCorrect);
           reply({
             message: 'Logged In',
             data: {

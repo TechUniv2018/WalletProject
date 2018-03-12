@@ -126,7 +126,7 @@ module.exports = [{
     const { friendId } = request.payload;
     const { userId } = request.auth.credentials;
 
-    model.contacts.destroy({ where: { userId: friendId } }).then((result) => {
+    model.contacts.destroy({ where: { userId, friendId } }).then((result) => {
       if (result === 0) {
         reply({ message: 'User doesn\'t exist' }).code(400);
       } else {

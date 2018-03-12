@@ -38,8 +38,8 @@ const transferMoney = transactionId => new Promise((resolve, reject) => {
       const { fromId } = transactionDetails;
       const { amount } = transactionDetails;
       const { toId } = transactionDetails;
-      decreaseBalance(fromId, amount).then(() => {
-        increaseBalance(toId, amount).then(() => {
+      decreaseBalance(toId, amount).then(() => {
+        increaseBalance(fromId, amount).then(() => {
           Models.transactions.update({
             status: 'COMPLETED',
           }, {

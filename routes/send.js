@@ -71,7 +71,7 @@ const route = [
             toId,
             amount: amt,
             reason,
-            status: 'completed',
+            status: 'COMPLETED',
             timeStamp: new Date(),
             createdAt: new Date(),
             updatedAt: new Date(),

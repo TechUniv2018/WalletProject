@@ -18,9 +18,7 @@ module.exports = [{
         authorization: Joi.string(),
       }).unknown(),
       payload: Joi.object({
-        transactionId: Joi.number().integer().min(10000).max(99999)
-          .required()
-          .example(11212),
+        transactionId: Joi.string().required().example('2_3_Mon Mar 12 2018 06:39:28 GMT+0530 (IST)'),
         decision: Joi.string().min(2).max(3).required()
           .example('NO'),
       }),

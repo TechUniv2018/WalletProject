@@ -1,3 +1,5 @@
+
+
 const model = require('../models');
 const Joi = require('joi');
 
@@ -84,7 +86,7 @@ module.exports = [{
   },
 }, {
   method: 'POST',
-  path: '/contacts',
+  path: '/contacts/addContact',
   config: {
     tags: ['api'],
     description: 'add a contact for the current user',
@@ -92,20 +94,18 @@ module.exports = [{
     plugins: {
       'hapi-swagger': contactAddSwagger,
     },
-    validate: { headers: headerValidation, payload: contactAddValidation },
+    validate: { headers: headerValidation },
   },
   handler: (request, reply) => {
-    const { friendId } = request.payload;
-    const { userId } = request.auth.credentials;
+    const contact = request.payload.contact;
+    const userId = request.auth.credentials.userId;
+    console.log('yupp coming inside handler');
 
-    if (friendId === userId) {
-      reply({ message: 'Can\'t add yourself' }).code(400);
-    }
-
-    model.users.findOne({ where: { userId: friendId } }).then((result) => {
-      if (result === null) {
-        reply({ message: 'User doesn\'t exist' }).code(400);
+    model.users.findOne({ where: { userName: contact } }).then((result) => {
+      if (result === null) { reply({ message: 'User doesn\'t exist' }); } else if (userId === result.userId) {
+        reply({ message: 'Can\'t add yourself' }).code(400);
       } else {
+        const friendId = result.userId;
         model.contacts.findOrCreate({ where: { userId, friendId }, defaults: { userId, friendId } }).then(() => reply({ message: 'Successfully added' }).code(200));
       }
     });

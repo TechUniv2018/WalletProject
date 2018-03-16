@@ -51,7 +51,7 @@ const contactAddValidation = Joi.object({
 
 module.exports = [{
   method: 'GET',
-  path: '/contacts',
+  path: '/contacts/getAllContacts',
   config: {
     tags: ['api'],
     description: 'get contacts of the users',

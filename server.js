@@ -1,6 +1,7 @@
 const Hapi = require('hapi');
 const secret = require('./secret');
 const Routes = require('./routes');
+
 const Jwt = require('hapi-auth-jwt2');
 
 const validate = require('./validate');

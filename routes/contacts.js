@@ -97,8 +97,8 @@ module.exports = [{
     validate: { headers: headerValidation },
   },
   handler: (request, reply) => {
-    const contact = request.payload.contact;
-    const userId = request.auth.credentials.userId;
+    const { contact } = request.payload;
+    const { userId } = request.auth.credentials;
     console.log('yupp coming inside handler');
 
     model.users.findOne({ where: { userName: contact } }).then((result) => {

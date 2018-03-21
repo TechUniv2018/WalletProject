@@ -1,4 +1,5 @@
 const Models = require('../../models');
+const pusher = require('../../utils/pusher');
 
 const decreaseBalance = (Id, amt) => new Promise((resolve, reject) => {
   Models.userDetails.findOne({ where: { userId: Id } })
@@ -35,9 +36,9 @@ const increaseBalance = (Id, amt) => new Promise((resolve) => {
 const transferMoney = transactionId => new Promise((resolve, reject) => {
   Models.transactions.findOne({ where: { transactionId } })
     .then((transactionDetails) => {
-      const { fromId } = transactionDetails;
-      const { amount } = transactionDetails;
-      const { toId } = transactionDetails;
+      const {
+        fromId, amount, toId, reason,
+      } = transactionDetails;
       decreaseBalance(toId, amount).then(() => {
         increaseBalance(fromId, amount).then(() => {
           Models.transactions.update({
@@ -47,6 +48,17 @@ const transferMoney = transactionId => new Promise((resolve, reject) => {
               transactionId,
             },
           }).then(() => {
+            pusher.trigger(
+              'money-channel', 'approve-money',
+              {
+                from: fromId,
+                to: toId,
+                amount,
+                reason,
+                id: transactionId,
+                status: 'APPROVED',
+              },
+            );
             resolve();
           });
         });
@@ -59,16 +71,32 @@ const transferMoney = transactionId => new Promise((resolve, reject) => {
 
 const cancelTransaction = transactionId => new Promise((resolve) => {
   // update transaction status in transaction history
-  Models.transactions.update({
-    status: 'FAILED',
-  }, {
-    where: {
-      transactionId,
-      status: 'PENDING',
-    },
-  })
-    .then(() => {
-      resolve();
+  Models.transactions.findOne({ where: { transactionId } })
+    .then((transactionDetails) => {
+      const {
+        fromId, amount, toId, reason,
+      } = transactionDetails;
+      Models.transactions.update({
+        status: 'FAILED',
+      }, {
+        where: {
+          transactionId,
+          status: 'PENDING',
+        },
+      }).then(() => {
+        pusher.trigger(
+          'money-channel', 'approve-money',
+          {
+            from: fromId,
+            to: toId,
+            amount,
+            reason,
+            id: transactionId,
+            status: 'DECLINED',
+          },
+        );
+        resolve();
+      });
     });
 });
 

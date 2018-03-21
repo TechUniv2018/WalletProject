@@ -41,15 +41,15 @@ const route = [
       const amt = request.payload.amount;
       const currentUserId = request.auth.credentials.userId;
       const { reason, toId } = request.payload;
-      // create transaction
+      const transactionId = `${currentUserId}_${toId}_${new Date()}`;
       pusher.trigger(
         'money-channel', 'request-money',
         {
-          to: currentUserId, from: toId, amount: amt, reason,
+          to: currentUserId, from: toId, amount: amt, reason, id: transactionId,
         },
       );
       Models.transactions.create({
-        transactionId: `${currentUserId}_${toId}_${new Date()}`,
+        transactionId,
         fromId: currentUserId,
         toId,
         amount: amt,

@@ -147,7 +147,7 @@ describe('JWT validation', () => {
 
 
   test('Simulate Authentication', (done) => {
-    const token = Jwt.sign({ userId: 1, name: 'John_Doe' }, secret);
+    const token = Jwt.sign({ userId: 1, name: 'John_Doe' }, secret.auth);
     const options = {
       method: 'GET',
       url: '/auth',
@@ -161,7 +161,7 @@ describe('JWT validation', () => {
 
 
   test('Try using an expired token', (done) => {
-    const token = Jwt.sign({ userId: 1, name: 'John_Doe' }, secret, { expiresIn: '1s' });
+    const token = Jwt.sign({ userId: 1, name: 'John_Doe' }, secret.auth, { expiresIn: '1s' });
     const options = {
       method: 'GET',
       url: '/auth',

@@ -4,18 +4,19 @@ const server = require('../../server');
 describe('url validation', () => {
   test('Responds with 200 status code when provided credentials', (done) => {
     const request = {
-      method: 'POST',
+      method: 'PATCH',
       url: '/transaction/approve',
       credentials: {
-        userId: 3,
-        userName: 'Bob_B',
+        userId: 2,
+        userName: 'Alice_A',
       },
       payload: {
-        transactionId: 23456,
+        transactionId: '23456',
         decision: 'NO',
       },
     };
     server.inject(request, (response) => {
+      console.log(response);
       expect(response.statusCode).toBe(200);
       done();
     });
@@ -23,10 +24,10 @@ describe('url validation', () => {
 
   test('Responds with 401 status code when no credentials are provided', (done) => {
     const request = {
-      method: 'POST',
+      method: 'PATCH',
       url: '/transaction/approve',
       payload: {
-        transactionId: 23456,
+        transactionId: '23456',
         decision: 'NO',
       },
     };
@@ -40,7 +41,7 @@ describe('url validation', () => {
 describe('request validation', () => {
   test('rejects request if transactionId is not provided', (done) => {
     const request = {
-      method: 'POST',
+      method: 'PATCH',
       url: '/transaction/approve',
       credentials: {
         userId: 1,
@@ -58,14 +59,14 @@ describe('request validation', () => {
 
   test('rejects request if user decision is not provided', (done) => {
     const request = {
-      method: 'POST',
+      method: 'PATCH',
       url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
       },
       payload: {
-        transactionId: 11111,
+        transactionId: '11111',
       },
     };
     server.inject(request, (response) => {
@@ -78,14 +79,14 @@ describe('request validation', () => {
 describe('functionality tests', () => {
   test('Updates status when transaction is completed', (done) => {
     const request = {
-      method: 'POST',
+      method: 'PATCH',
       url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
       },
       payload: {
-        transactionId: 11111,
+        transactionId: '11111',
         decision: 'YES',
       },
     };
@@ -100,15 +101,15 @@ describe('functionality tests', () => {
 
   test('Transaction is approved but user has insufficient balance', (done) => {
     const request = {
-      method: 'POST',
+      method: 'PATCH',
       url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
       },
       payload: {
-        transactionId: 17111,
-        decision: 'NO',
+        transactionId: '17111',
+        decision: 'YES',
       },
     };
     server.inject(request, () => {
@@ -122,14 +123,14 @@ describe('functionality tests', () => {
 
   test('Updates status when transaction is failed', (done) => {
     const request = {
-      method: 'POST',
+      method: 'PATCH',
       url: '/transaction/approve',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
       },
       payload: {
-        transactionId: 11212,
+        transactionId: '11212',
         decision: 'NO',
       },
     };

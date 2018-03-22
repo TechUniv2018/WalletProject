@@ -102,7 +102,7 @@ module.exports = [{
     console.log('yupp coming inside handler');
 
     model.users.findOne({ where: { userName: contact } }).then((result) => {
-      if (result === null) { reply({ message: 'User doesn\'t exist' }); } else if (userId === result.userId) {
+      if (result === null) { reply({ message: 'User doesn\'t exist' }).code(400); } else if (userId === result.userId) {
         reply({ message: 'Can\'t add yourself' }).code(400);
       } else {
         const friendId = result.userId;

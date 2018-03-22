@@ -7,7 +7,7 @@ describe('GET contacts list', () => {
   test('should get 401 status code if passed without auth', (done) => {
     const request = {
       method: 'GET',
-      url: '/contacts',
+      url: '/contacts/getAllContacts',
     };
     server.inject(request, (reply) => {
       expect(reply.statusCode).toEqual(401);
@@ -18,7 +18,7 @@ describe('GET contacts list', () => {
   test('should get 200 status code if passed with auth', (done) => {
     const request = {
       method: 'GET',
-      url: '/contacts',
+      url: '/contacts/getAllContacts',
       credentials: { userId, userName },
     };
     server.inject(request, (reply) => {
@@ -30,7 +30,7 @@ describe('GET contacts list', () => {
   test('should get array of objects on success', (done) => {
     const request = {
       method: 'GET',
-      url: '/contacts',
+      url: '/contacts/getAllContacts',
       credentials: { userId, userName },
     };
     server.inject(request, (reply) => {
@@ -47,7 +47,7 @@ describe('POST a new contact to the contact list', () => {
   test('should get 401 status code if passed without auth', (done) => {
     const request = {
       method: 'POST',
-      url: '/contacts',
+      url: '/contacts/addContact',
     };
     server.inject(request, (reply) => {
       expect(reply.statusCode).toEqual(401);
@@ -58,9 +58,9 @@ describe('POST a new contact to the contact list', () => {
   test('should get 200 status code if passed with auth', (done) => {
     const request = {
       method: 'POST',
-      url: '/contacts',
+      url: '/contacts/addContact',
       credentials: { userId, userName },
-      payload: { friendId: 2 },
+      payload: { contact: 'Bob_B' },
     };
     server.inject(request, (reply) => {
       expect(reply.statusCode).toEqual(200);
@@ -72,9 +72,9 @@ describe('POST a new contact to the contact list', () => {
   test('should get Successfully on adding a friend', (done) => {
     const request = {
       method: 'POST',
-      url: '/contacts',
+      url: '/contacts/addContact',
       credentials: { userId, userName },
-      payload: { friendId: 2 },
+      payload: { contact: 'Bob_B' },
     };
     server.inject(request, (reply) => {
       expect(reply.result.message).toEqual('Successfully added');
@@ -85,9 +85,9 @@ describe('POST a new contact to the contact list', () => {
   test('should get error if passing user\'s own id', (done) => {
     const request = {
       method: 'POST',
-      url: '/contacts',
+      url: '/contacts/addContact',
       credentials: { userId, userName },
-      payload: { friendId: userId },
+      payload: { contact: 'John_Doe' },
     };
     server.inject(request, (reply) => {
       expect.assertions(2);
@@ -100,9 +100,9 @@ describe('POST a new contact to the contact list', () => {
   test('should get error if passsing non-existent id', (done) => {
     const request = {
       method: 'POST',
-      url: '/contacts',
+      url: '/contacts/addContact',
       credentials: { userId, userName },
-      payload: { friendId: 23 },
+      payload: { contact: 'potato' },
     };
     server.inject(request, (reply) => {
       expect.assertions(2);

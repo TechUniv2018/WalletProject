@@ -37,8 +37,8 @@ describe('check for sending OTP', () => {
 describe('check for verifying OTP', () => {
   test('/verifyOTP should respond with status code 200', (done) => {
     const req = {
-      method: 'POST',
-      url: '/verifyOTP',
+      method: 'PATCH',
+      url: '/forgetPassword/verifyOTP',
       credentials: {
         userId: 1,
         userName: 'John_Doe',
@@ -54,10 +54,10 @@ describe('check for verifying OTP', () => {
     });
   });
 
-  test('/verifyOTP, sending wrong OTP', (done) => {
+  test('forgetPassword/verifyOTP, sending wrong OTP', (done) => {
     const req = {
-      method: 'POST',
-      url: '/verifyOTP',
+      method: 'PATCH',
+      url: '/forgetPassword/verifyOTP',
       credentials: {
         userId: 1,
         userName: 'John_Doe',

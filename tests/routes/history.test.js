@@ -47,8 +47,8 @@ describe('check server response message', () => {
         expect(transaction.transactionId).toBeDefined();
         expect(transaction.fromId).toBeDefined();
         expect(transaction.toId).toBeDefined();
-        expect(transaction.fromName).toBeDefined();
-        expect(transaction.toName).toBeDefined();
+        expect(transaction.fromUser).toBeDefined();
+        expect(transaction.toUser).toBeDefined();
         expect(transaction.amount).toBeDefined();
         expect(transaction.reason).toBeDefined();
         expect(transaction.status).toBeDefined();

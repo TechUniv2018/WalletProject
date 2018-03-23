@@ -36,9 +36,7 @@ module.exports = {
           200: {
             description: 'Success',
             schema: Joi.object({
-              history: Joi.array().items(Joi.object({
-                message: Joi.string().example('category set'),
-              })),
+              message: Joi.string().example('category set'),
             }).label('Result'),
           },
           400: { description: 'Bad Request' },
@@ -49,7 +47,7 @@ module.exports = {
     validate: {
       headers: historyHeaderValidation,
       payload: Joi.object({
-        transactionId: Joi.number()
+        transactionId: Joi.string()
           .example(12345),
         category: Joi.string()
           .example('movie'),

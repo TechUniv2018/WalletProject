@@ -10,12 +10,3 @@ describe('forgotpasswords: check if data matches model', () => {
     });
   }));
 });
-
-describe('forgotpasswords: check size of seeded table', () => {
-  test('check if seeded forgotpasswords table has size 1', () => {
-    expect.assertions(1);
-    return Models.forgotpasswords.findAll().then((result) => {
-      expect(result.length).toBe(1);
-    });
-  });
-});

@@ -1,6 +1,6 @@
 // routed here when user forgets his password
 
-const sendMessage = require('./handler/sendOTP');
+const sendMessage = require('./Handler/sendOTP');
 const Models = require('../models');
 const forgetPasswordSwagger = require('../swagger/routes/forgetpassword');
 const verifyOTPSwagger = require('../swagger/routes/verifyOTP');
@@ -55,25 +55,27 @@ const sendOTP = (phone) => {
   return otp;
 };
 
-const verifyOTP = (userInfo, otpEntry, rcvdOTP, newPassword) => new Promise((resolve) => {
+const verifyOTP = (userName, otpEntry, rcvdOTP, newPassword) => new Promise((resolve) => {
   if (otpEntry.otp === parseInt(rcvdOTP) && !timedout(otpEntry.timestamp)) {
     // const newPassword = Math.random().toString(36).slice(-8);
-    const userInfoNew = {
-      userId: userInfo.userId,
-      userName: userInfo.userName,
-    };
-    // updating DB
-    hashPassword(newPassword, (_, hashedPassword) => {
-      Models.users.update(
-        { password: hashedPassword },
-        { where: { userId: userInfoNew.userId } },
-      ).then(() => {
-        resolve('Password successfully reset');
-      })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+    Models.users.findOne({ where: { userName } }).then(((data) => {
+      const userInfoNew = {
+        userId: data.userId,
+        userName,
+      };
+      // updating DB
+      hashPassword(newPassword, (_, hashedPassword) => {
+        Models.users.update(
+          { password: hashedPassword },
+          { where: { userId: userInfoNew.userId } },
+        ).then(() => {
+          resolve('Password successfully reset');
+        })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    }));
   } else if (!timedout(otpEntry.timestamp)) { // otp is wrong
     resolve('OTP is wrong, please try again');
   } else { // otp expired
@@ -101,7 +103,7 @@ module.exports = [{
     },
   },
   handler: (req, reply) => { // sends OTP to user
-    const { userName } = req.auth.credentials;
+    const { userName } = req.payload;
     getUserData(userName).then((userInfo) => {
       sendOTP(userInfo.phone).then((otp) => {
         otpDB(userInfo.userId, otp).then(() => {
@@ -121,24 +123,24 @@ module.exports = [{
     plugins: {
       'hapi-swagger': verifyOTPSwagger,
     },
-    validate: {
-      payload: Joi.object({
-        otp: Joi.number().integer().min(100000).max(999999),
-        newPassword: Joi.string().min(4).max(20).example('newPassword'),
-      }),
-    },
+    // validate: {
+    //   payload: Joi.object({
+    //     otp: Joi.number().integer().min(100000).max(999999),
+    //     newPassword: Joi.string().min(4).max(20).example('newPassword'),
+    //   }),
+    // },
   },
   handler: (req, reply) => {
     const rcvdOTP = req.payload.otp;
-    const userInfo = req.auth.credentials;
-    const newPassword = req.payload.newPassword;
+    const { userName } = req.payload;
+    const { newPassword } = req.payload;
     Models.forgotpasswords.findAll({ // Get latest otp info
-      where: { userId: userInfo.userId },
+      where: { userName },
       limit: 1,
       order: [['createdAt', 'DESC']],
     }).then((entry) => {
       const otpEntry = entry[0].dataValues;
-      verifyOTP(userInfo, otpEntry, rcvdOTP, newPassword)
+      verifyOTP(userName, otpEntry, rcvdOTP, newPassword)
         .then((response) => {
           reply(response);
         });

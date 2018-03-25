@@ -55,27 +55,21 @@ const sendOTP = (phone) => {
   return otp;
 };
 
-const verifyOTP = (userName, otpEntry, rcvdOTP, newPassword) => new Promise((resolve) => {
+const verifyOTP = (userId, otpEntry, rcvdOTP, newPassword) => new Promise((resolve) => {
   if (otpEntry.otp === parseInt(rcvdOTP) && !timedout(otpEntry.timestamp)) {
     // const newPassword = Math.random().toString(36).slice(-8);
-    Models.users.findOne({ where: { userName } }).then(((data) => {
-      const userInfoNew = {
-        userId: data.userId,
-        userName,
-      };
-      // updating DB
-      hashPassword(newPassword, (_, hashedPassword) => {
-        Models.users.update(
-          { password: hashedPassword },
-          { where: { userId: userInfoNew.userId } },
-        ).then(() => {
-          resolve('Password successfully reset');
-        })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
-    }));
+    // updating DB
+    hashPassword(newPassword, (_, hashedPassword) => {
+      Models.users.update(
+        { password: hashedPassword },
+        { where: { userId } },
+      ).then(() => {
+        resolve('Password successfully reset');
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   } else if (!timedout(otpEntry.timestamp)) { // otp is wrong
     resolve('OTP is wrong, please try again');
   } else { // otp expired
@@ -132,18 +126,21 @@ module.exports = [{
   },
   handler: (req, reply) => {
     const rcvdOTP = req.payload.otp;
-    const { userName } = req.payload;
-    const { newPassword } = req.payload;
-    Models.forgotpasswords.findAll({ // Get latest otp info
-      where: { userName },
-      limit: 1,
-      order: [['createdAt', 'DESC']],
-    }).then((entry) => {
-      const otpEntry = entry[0].dataValues;
-      verifyOTP(userName, otpEntry, rcvdOTP, newPassword)
-        .then((response) => {
-          reply(response);
-        });
+    const { userName, newPassword } = req.payload;
+
+    Models.users.findOne({ where: { userName } }).then((search) => {
+      const { userId } = search;
+      Models.forgotpasswords.findAll({ // Get latest otp info
+        where: { userId },
+        limit: 1,
+        order: [['createdAt', 'DESC']],
+      }).then((entry) => {
+        const otpEntry = entry[0].dataValues;
+        verifyOTP(userId, otpEntry, rcvdOTP, newPassword)
+          .then((response) => {
+            reply(response);
+          });
+      });
     });
   },
 }];

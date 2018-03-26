@@ -10,6 +10,9 @@ const getHistory = id => models.transactions.findAll({
   where: {
     [Sequelize.Op.or]: [{ fromId: id }, { toId: id }],
   },
+  order: [
+    ['timeStamp', 'DESC'],
+  ],
 }).then((result) => {
   const resultArrPromise = [];
   const detailsArr = [];

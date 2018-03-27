@@ -13,6 +13,19 @@ module.exports = {
     password: bcrypt.hashSync('password', 10),
     createdAt: new Date(),
     updatedAt: new Date(),
+  },
+  {
+    userId: 4,
+    userName: 'Rachel',
+    password: bcrypt.hashSync('password', 10),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }, {
+    userId: 5,
+    userName: 'Ross',
+    password: bcrypt.hashSync('password', 10),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   }], {}),
 
   down: (queryInterface, Sequelize) => queryInterface.bulkDelete('users', null, {}),

@@ -17,7 +17,7 @@ const unseenSwagger = {
 
 const route = [
   {
-    method: 'POST',
+    method: 'GET',
     path: '/transactions/unseen',
     config: {
       tags: ['api'],
@@ -35,11 +35,33 @@ const route = [
       const currentUserId = request.auth.credentials.userId;
       Models.transactions.findAll({
         where: {
-          toId: currentUserId,
+          $or: [
+            {
+              toId: currentUserId,
+              type: { in: ['sent', 'requested'] },
+            },
+            {
+              fromId: currentUserId,
+              type: { in: ['APPROVED', 'DECLINED'] },
+            },
+          ],
           unseen: true,
         },
       })
-        .then(result => response(result));
+        .then((result) => {
+          const resultArr = result.map((transaction) => {
+            const id = transaction.type !== 'requested'
+              ? transaction.toId : transaction.fromId;
+            return {
+              name: id,
+              type: transaction.type,
+              amount: transaction.amount,
+              reason: transaction.reason,
+              transactionId: transaction.transactionId,
+            };
+          });
+          response(resultArr);
+        });
     },
   },
   {

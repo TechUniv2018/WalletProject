@@ -34,7 +34,7 @@ const getSplitableHistory = id => models.transactions.findAll({
   where: {
     fromId: id,
     status: 'COMPLETED',
-    type: 1,
+    type: 'sent',
   },
 }).then((result) => {
   const resultArrPromise = [];

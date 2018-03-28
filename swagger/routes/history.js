@@ -14,7 +14,7 @@ const historySwagger = {
           status: Joi.string().example('completed'),
           timeStamp: Joi.date().example('2018-02-13T08:13:40.786Z'),
           category: Joi.string().example('food'),
-          type: Joi.number().example(1),
+          type: Joi.string().example('sent'),
         })),
       }).label('Result'),
     },

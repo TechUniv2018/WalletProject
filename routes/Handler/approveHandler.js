@@ -42,6 +42,8 @@ const transferMoney = transactionId => new Promise((resolve, reject) => {
       decreaseBalance(toId, amount).then(() => {
         increaseBalance(fromId, amount).then(() => {
           Models.transactions.update({
+            type: 'APPROVED',
+            unseen: true,
             status: 'COMPLETED',
           }, {
             where: {
@@ -78,6 +80,8 @@ const cancelTransaction = transactionId => new Promise((resolve) => {
       } = transactionDetails;
       Models.transactions.update({
         status: 'FAILED',
+        type: 'DECLINED',
+        unseen: true,
       }, {
         where: {
           transactionId,

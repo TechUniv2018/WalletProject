@@ -56,7 +56,7 @@ const route = [
         toId,
         amount: amt,
         unseen: true,
-        type: 2,
+        type: 'requested',
         reason,
         status: 'PENDING',
         timeStamp: new Date(),

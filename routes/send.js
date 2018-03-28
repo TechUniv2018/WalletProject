@@ -73,7 +73,7 @@ const route = [
             toId,
             amount: amt,
             reason,
-            type: 1,
+            type: 'sent',
             unseen: true,
             status: 'COMPLETED',
             timeStamp: new Date(),

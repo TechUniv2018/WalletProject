@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     timeStamp: DataTypes.DATE,
     category: DataTypes.STRING,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     unseen: DataTypes.BOOLEAN,
   }, {
     classMethods: {

@@ -50,8 +50,12 @@ const route = [
       })
         .then((result) => {
           const resultArr = result.map((transaction) => {
-            const id = transaction.type !== 'requested'
-              ? transaction.toId : transaction.fromId;
+            let id;
+            if (transaction.type === 'sent' || transaction.type === 'requested') {
+              id = transaction.fromId;
+            } else {
+              id = transaction.toId;
+            }
             return {
               name: id,
               type: transaction.type,

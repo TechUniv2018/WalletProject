@@ -13,6 +13,7 @@ const category = require('./category');
 const contacts = require('./contacts');
 const details = require('./details');
 const users = require('./users');
+const unseen = require('./unseen');
 
 module.exports = [].concat(
   ping,
@@ -28,4 +29,5 @@ module.exports = [].concat(
   details,
   approve,
   users,
+  unseen,
 );

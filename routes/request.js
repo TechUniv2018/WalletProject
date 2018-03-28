@@ -16,8 +16,10 @@ const requestSwagger = {
   },
 };
 const requestPayloadValidation = Joi.object({
-  toId: Joi.number().integer().min(1).example(1),
-  amount: Joi.number().integer().min(0).example(500),
+  toId: Joi.number().integer().min(1).required()
+    .example(1),
+  amount: Joi.number().precision(2).min(0).required()
+    .example(500),
   reason: Joi.string().example('food'),
 });
 const route = [
@@ -53,6 +55,8 @@ const route = [
         fromId: currentUserId,
         toId,
         amount: amt,
+        unseen: true,
+        type: 2,
         reason,
         status: 'PENDING',
         timeStamp: new Date(),

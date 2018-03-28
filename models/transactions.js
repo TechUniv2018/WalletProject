@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     timeStamp: DataTypes.DATE,
     category: DataTypes.STRING,
     type: DataTypes.INTEGER,
+    unseen: DataTypes.BOOLEAN,
   }, {
     classMethods: {
       associate(models) {

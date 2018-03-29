@@ -24,6 +24,11 @@ const route = [{
     const {
       password,
       userName,
+      aadharNo,
+      phone,
+      accountNo,
+      firstName,
+      lastName,
     } = request.payload;
 
     Model.users.findOne({
@@ -40,8 +45,19 @@ const route = [{
           // TODO: create with a user ID
           userName,
           password: hash,
+        }).then((user) => {
+          Model.userDetails.create({
+            userId: user.dataValues.userId,
+            aadharNo,
+            phone,
+            accountNo,
+            balance: 1000,
+            firstName,
+            lastName,
+          });
         }));
-      }).then(() => {
+      })
+      .then(() => {
         reply({
           statusCode: 200,
           message: 'User successfully created',

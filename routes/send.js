@@ -60,7 +60,11 @@ const route = [
           pusher.trigger(
             'money-channel', 'send-money',
             {
-              from: currentUserId, to: toId, amount: amt, reason,
+              from: currentUserId,
+              to: toId,
+              amount: amt,
+              reason,
+              id: `${currentUserId}_${toId}_${new Date()}`,
             },
           );
           // deduct balance from fromId

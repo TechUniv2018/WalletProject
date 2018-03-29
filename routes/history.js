@@ -7,6 +7,9 @@ const historyHeaderValidation = require('../validations/routes/history');
 
 const getHistory = id => models.transactions.findAll({
   attributes: ['transactionId', 'fromId', 'toId', 'amount', 'reason', 'status', 'timeStamp', 'category', 'type'],
+  order: [
+    ['timeStamp', 'DESC'],
+  ],
   where: {
     [Sequelize.Op.or]: [{ fromId: id }, { toId: id }],
   },
@@ -31,6 +34,9 @@ const getHistory = id => models.transactions.findAll({
 
 const getSplitableHistory = id => models.transactions.findAll({
   attributes: ['transactionId', 'fromId', 'toId', 'amount', 'reason', 'status', 'timeStamp', 'category', 'type'],
+  order: [
+    ['timeStamp', 'DESC'],
+  ],
   where: {
     fromId: id,
     status: 'COMPLETED',

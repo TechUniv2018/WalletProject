@@ -1,8 +1,8 @@
 const Hapi = require('hapi');
-const secret = require('./secret');
+const secret = require('./secret.js');
 const Routes = require('./routes');
-const Jwt = require('hapi-auth-jwt2');
 
+const Jwt = require('hapi-auth-jwt2');
 const validate = require('./validate');
 
 const Inert = require('inert');
@@ -37,7 +37,7 @@ server.register([
 });
 
 server.auth.strategy('jwt', 'jwt', {
-  key: secret,
+  key: secret.auth,
   validateFunc: validate,
   verifyOptions: {
     algorithms: ['HS256'],
@@ -54,5 +54,6 @@ if (!module.parent) {
     console.log('Server running at:', server.info.uri);
   });
 }
+
 
 module.exports = server;
